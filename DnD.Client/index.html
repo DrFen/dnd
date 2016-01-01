@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html class="no-js">
+<head>
+   
+    <!--VENDOR JS-->
+    <script src="vendor/jquery/jquery-1.11.3.min.js"></script>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular/angular-route.min.js"></script>
+    <script src="vendor/angular/ng-grid.js"></script>
+    <script src="vendor/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js"></script>
+
+    <!--VENDOR CSS-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/vendor/ng-grid.css" rel="stylesheet" />
+    <link href="css/vendor/ng-grid.min.css" rel="stylesheet"/>
+    
+
+    <!--STYLESHEET-->
+    <link href="css/main.css" rel="stylesheet" />
+
+    <!--CONTROLLERS-->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/page-static-controller.js"></script>
+    <script src="templates/main-controller.js"></script>
+
+    <!--User controllers-->
+    <script src="scripts/user-control/user-control.js"></script>
+
+</head>
+<body ng-app="dndapp">
+
+    <div ng-include='"templates/header.html"'></div>
+    <div ng-view></div>
+    <div ng-include='"templates/footer.html"'></div>
+</body>
+</html>

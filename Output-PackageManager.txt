@@ -1,0 +1,9 @@
+﻿Attempting to gather dependencies information for package 'NHibernate.Mapping.Attributes.4.0.0.1' with respect to project 'DnD.DAL', targeting '.NETFramework,Version=v4.5.2'
+Attempting to resolve dependencies for package 'NHibernate.Mapping.Attributes.4.0.0.1' with DependencyBehavior 'Lowest'
+Resolving actions to install package 'NHibernate.Mapping.Attributes.4.0.0.1'
+Resolved actions to install package 'NHibernate.Mapping.Attributes.4.0.0.1'
+Adding package 'NHibernate.Mapping.Attributes.4.0.0.1' to folder 'C:\Projects\DnD\DnD\packages'
+Added package 'NHibernate.Mapping.Attributes.4.0.0.1' to folder 'C:\Projects\DnD\DnD\packages'
+Added package 'NHibernate.Mapping.Attributes.4.0.0.1' to 'packages.config'
+Successfully installed 'NHibernate.Mapping.Attributes 4.0.0.1' to DnD.DAL
+========== Finished ==========
