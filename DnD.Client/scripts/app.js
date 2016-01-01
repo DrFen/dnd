@@ -10,4 +10,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 }]);
 
-
+app.controller('ErrorCtrl', function ($scope) {
+    $scope.$on('ErrorMessage', function (event, args) { alert(args)});
+});

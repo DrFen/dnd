@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html class="no-js">
 <head>
-   
+
     <!--VENDOR JS-->
     <script src="vendor/jquery/jquery-1.11.3.min.js"></script>
     <script src="vendor/angular/angular.min.js"></script>
@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/vendor/ng-grid.css" rel="stylesheet" />
-    <link href="css/vendor/ng-grid.min.css" rel="stylesheet"/>
-    
+    <link href="css/vendor/ng-grid.min.css" rel="stylesheet" />
+
 
     <!--STYLESHEET-->
     <link href="css/main.css" rel="stylesheet" />
@@ -34,5 +34,21 @@
     <div ng-include='"templates/header.html"'></div>
     <div ng-view></div>
     <div ng-include='"templates/footer.html"'></div>
+
+    <!--Модальное окно для ошибок-->
+    <script type="text/ng-template" id="error.html" ng-controller="ErrorCtrl">
+        <div class="modal-header">
+            <h3 class="modal-title">Ошибка</h3>
+        </div>
+        <div class="modal-body">
+            <label>{{ErrorMessage}}</label>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        </div>
+    </script>
+
 </body>
+
+
 </html>

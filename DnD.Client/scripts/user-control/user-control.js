@@ -49,17 +49,17 @@
 
 });
 
-app.controller('UserEditCtrl', function ($scope, $uibModalInstance, selectedItem) {
+app.controller('UserEditCtrl', function ($scope, $rootScope, $uibModalInstance, selectedItem) {
 
     $scope.selectedItem = selectedItem;
     
     $scope.ok = function () {
         if (!selectedItem.Password || selectedItem.Password === '') {
-            alert('Не допускается пустой пароль');
+            $rootScope.$broadcast('ErrorMessage', 'Не допускается пустой пароль');
             return;
         };
         if ($scope.selectedItem.Password !== selectedItem.PasswordRepeat) {
-            alert('Пароли не совпадают');
+            $rootScope.$broadcast('ErrorMessage', 'Пароли не совпадают');
             return;
         }
         $uibModalInstance.close($scope.selectedItem); //тут можно передать переменную
