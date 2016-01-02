@@ -1,18 +1,21 @@
-﻿app.controller('UserCtrl', function ($scope, $location, $uibModal) {
+﻿app.controller('UserCtrl', function ($scope, $rootScope, $location, $uibModal, dataService) {
 
-    $scope.myData = [{ Login: "Moroni", CharCount: 50 },
-                     { Login: "Tiancum", CharCount: 43 },
-                     { Login: "Jacob", CharCount: 27 },
-                     { Login: "Nephi", CharCount: 29 },
-                     { Login: "Enos", CharCount: 34 }];
-
-
+    $scope.myData = [];//dataService.sendPost('useraccess/TestApi', '31415');
 
     var columnDefs = [{ field: 'Login', displayName: 'Имя пользователя', width: 300 },
-                      { field: 'CharCount', displayName: 'Количество персонажей', width: 200 }];
+                      { field: 'Name', displayName: 'Имя', width: 300 },
+                      { field: 'Id', displayName: 'id', width: 200 }];
 
     $scope.selectedItems = [];
 
+    $scope.reload = function() {
+        var promise = dataService.sendPost('useraccess/TestApi', '31415');
+        promise.then(function (val) {
+            $scope.myData = val;
+        }, function (reason) {
+            alert('Failed load');
+        });
+    };
 
 
     $scope.gridOptions = {
@@ -44,6 +47,14 @@
         }, function () {
             console.log('returned cancel');;
         });
+    };
+
+    $scope.lock = function() {
+        console.log('Зобанено');
+    };
+
+    $scope.lockUser = function () {
+        $rootScope.$broadcast('QuestionMessage', 'Вы действительно хотите заблокировать пользователя?', $scope.lock);
     };
 
 

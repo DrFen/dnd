@@ -2,6 +2,7 @@
 {
     public class Request<T>
     {
-       public T Req { get; set; }
+        public string UserKey { get; set; }
+        public T Value { get; set; }
     }
 }

@@ -36,15 +36,38 @@
     <div ng-include='"templates/footer.html"'></div>
 
     <!--Модальное окно для ошибок-->
-    <script type="text/ng-template" id="error.html" ng-controller="ErrorCtrl">
+    <script type="text/ng-template" id="message.html" ng-controller="MessageCtrl">
         <div class="modal-header">
-            <h3 class="modal-title">Ошибка</h3>
+            <h3 ng-if="windowType ==='error'" class="modal-title">Ошибка</h3>
+            <h3 ng-if="windowType ==='question'" class="modal-title">Предупреждение</h3>
         </div>
         <div class="modal-body">
-            <label>{{ErrorMessage}}</label>
+            <label>{{message}}</label>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" type="button" ng-if="windowType ==='error'" ng-click="close()">OK</button>
+            <button class="btn btn-primary" type="button" ng-if="windowType ==='question'" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-if="windowType ==='question'" ng-click="dismiss()">Отмена</button>
+        </div>
+    </script>
+
+    <!--Модальное окно для логина-->
+    <script type="text/ng-template" id="login.html" ng-controller="LoginCtrl">
+        <div class="modal-header">
+            <h3 class="modal-title">Вход в систему</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">Имя пользователя</label>
+                <input type="text" ng-model="login" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Пароль</label>
+                <input type="password" ng-model="password" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="loginUser()">Вход</button>
         </div>
     </script>
 

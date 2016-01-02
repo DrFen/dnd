@@ -1,7 +1,8 @@
 ﻿<div class="container" ng-controller="UserCtrl">
     <div class="buttonBlock">
         <a class="btn btn-primary" ng-click="openEdit()">Добавить</a>
-        <a class="btn btn-primary">Удалить</a>
+        <a class="btn btn-primary" ng-click="lockUser()">Заблокировать</a>
+        <a class="btn btn-primary" ng-click="reload()">reload</a>
     </div>
     <div class="gridStyle" ng-grid="gridOptions"></div>
 </div>

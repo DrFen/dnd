@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using DnD.Core.REST;
 using DnD.DAL.Entities.Users;
@@ -23,9 +25,7 @@ namespace DnD.REST.Controllers
         [HttpPost]
         public Response<List<UserListModel>> TestApi(Request<string> req)
         {
-            //var userInfo = (UserInfo)Request.Properties["userInfo"];
 
-            //var result = _appealOperations.GetComplainer(req.Req, userInfo.User);
             return new Response<List<UserListModel>>(_userOperations.GetUserList(), 0, "без ошибок");
         }
 

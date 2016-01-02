@@ -18,7 +18,10 @@ namespace DnD.DAL.Entities.Users
         [Property(Column = "login", Type = "String")]
         public virtual string Name { get; set; }
 
-       
+        [Property(Column = "login", Type = "String")]
+        public virtual string Login { get; set; }
+
+
 
     }
 

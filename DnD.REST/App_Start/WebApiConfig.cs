@@ -11,7 +11,7 @@ namespace DnD.REST
 
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional }
             );
-            //config.MessageHandlers.Add(new AuthHandler());
+            config.MessageHandlers.Add(new AuthHandler());
         }
     }
 }

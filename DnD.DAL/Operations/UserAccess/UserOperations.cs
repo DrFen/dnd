@@ -22,7 +22,7 @@ namespace DnD.DAL.Operations.UserAccess
         public virtual  List<UserListModel> GetUserList()
         {
             var dAnswer = _userContext.GetList();
-            var answer = dAnswer.Select(s => new UserListModel { Id = s.Id, Name = s.Name }).ToList();
+            var answer = dAnswer.Select(s => new UserListModel { Id = s.Id, Name = s.Name, Login = s.Login}).ToList();
             return answer;
 
         }
