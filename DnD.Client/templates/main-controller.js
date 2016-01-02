@@ -1,6 +1,4 @@
 'use strict';
-
-
 app.controller('MainCtrl', function($scope, $location) {
     console.log('Я работаю!');
     $scope.checkedMenuItem = null;
@@ -12,27 +10,10 @@ app.controller('MainCtrl', function($scope, $location) {
             RootId: null,
             Action: null
         }, {
-            Name: 'пункт 2',
+            Name: 'Справочники d&d',
             Id: 2,
             RootId: null,
             Action: null
-        },
-        {
-            Name: 'пункт 3',
-            Id: 3,
-            RootId: null,
-            Action: null
-        },
-        {
-            Name: 'пункт 1.3.1',
-            Id: 131,
-            RootId: 13,
-            Action: 'about'
-        }, {
-            Name: 'пункт 1.3.2',
-            Id: 132,
-            RootId: 13,
-            Action: 'about'
         },
         {
             Name: 'Пользователи',
@@ -41,16 +22,16 @@ app.controller('MainCtrl', function($scope, $location) {
             Action: 'users'
         },
         {
-            Name: 'пункт 1.2',
-            Id: 12,
-            RootId: 1,
-            Action: 'about'
+            Name: 'Расы',
+            Id: 21,
+            RootId: 2,
+            Action: 'race'
         },
         {
-            Name: 'пункт 1.3',
-            Id: 13,
-            RootId: 1,
-            Action: null
+            Name: 'Классы',
+            Id: 22,
+            RootId: 2,
+            Action: 'classes'
         }
     ];
 
@@ -88,6 +69,7 @@ app.controller('MainCtrl', function($scope, $location) {
     };
 
     $scope.selectMenuItem = function (id) {
+        //debugger;
         var selectedItem = $scope.getItemById(id);
         if (selectedItem != null) {
             if (selectedItem.Action != null) {

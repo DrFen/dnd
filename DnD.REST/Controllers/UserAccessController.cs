@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using DnD.Core.REST;
-using DnD.DAL.Entities.Users;
 using DnD.DAL.Interfaces.UserAccess;
+using DnD.DAL.Models.UserAccess;
 using DnD.DAL.Models.UserAccess.List;
-using DnD.DAL.Operations.UserAccess;
 
 namespace DnD.REST.Controllers
 {
@@ -21,7 +18,7 @@ namespace DnD.REST.Controllers
             _userOperations = userOperations;
         }
 
-        [Route("TestApi")]
+        [Route("UserList")]
         [HttpPost]
         public Response<List<UserListModel>> TestApi(Request<string> req)
         {
@@ -29,15 +26,18 @@ namespace DnD.REST.Controllers
             return new Response<List<UserListModel>>(_userOperations.GetUserList(), 0, "без ошибок");
         }
 
-      /*  [Route("AddUser")]
+        [Route("Login")]
         [HttpPost]
-        public Response<List<CreateUser>> AddUser(Request<string> req)
+        public Response<string> UserLogin(Request<LoginUserModel> req)
         {
-            //var userInfo = (UserInfo)Request.Properties["userInfo"];
+            return _userOperations.Login(req.Value);
+        }
 
-            //var result = _appealOperations.GetComplainer(req.Req, userInfo.User);
-            var operation = new UserOperations();
-            return new Response<List<CreateUser>>(operation.AddUser(), 0, "без ошибок");
-        }*/
+       [Route("AddUser")]
+        [HttpPost]
+        public Response<Guid?> AddUser(Request<LoginUserModel> req)
+        {
+           return _userOperations.AddUser(req.Value);
+        }
     }
 }

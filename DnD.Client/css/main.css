@@ -139,8 +139,8 @@ footer {
 .gridStyle {
     border: 1px solid rgb(212,212,212);
     width: 100%;
-    min-height: 460px;
-    height: 470px;
+    min-height: 400px;
+    height: 420px;
 }
 
 .buttonBlock {

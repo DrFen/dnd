@@ -111,6 +111,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\ErrorEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="REST\Response.cs" />
     <Compile Include="REST\Resuest.cs" />

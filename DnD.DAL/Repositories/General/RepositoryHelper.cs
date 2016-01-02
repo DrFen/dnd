@@ -13,7 +13,7 @@ using NHibernate.Transform;
 
 namespace DnD.DAL.Repositories.General
 {
-    public abstract class RepositoryHelper<T> : IEntityDb<T> where T : class
+    public class RepositoryHelper<T> : IEntityDb<T> where T : class
     {
 
 
@@ -53,10 +53,10 @@ namespace DnD.DAL.Repositories.General
             HbmSerializer.Default.Validate = true;
             return HbmSerializer.Default.Serialize(Assembly.GetAssembly(typeof(User)));
         }
-        public List<T> GetList()
+        public IQueryOver<T> GetList()
         {
 
-            return _session.QueryOver<T>().List<T>().ToList();
+            return _session.QueryOver<T>();
             //.QueryOver<T>()
 
         }
@@ -89,7 +89,7 @@ namespace DnD.DAL.Repositories.General
             using (var transaction = _session.BeginTransaction())
             {
                // var answer = query.UniqueResult();
-                var answer = query.SetResultTransformer(Transformers.AliasToBean<CreateUser>()).List<TOut>().ToList();
+                var answer = query.SetResultTransformer(Transformers.AliasToBean<TOut>()).List<TOut>().ToList();
                 transaction.Commit();
                 return answer;
             }

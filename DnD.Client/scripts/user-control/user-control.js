@@ -1,6 +1,5 @@
 ﻿app.controller('UserCtrl', function ($scope, $rootScope, $location, $uibModal, dataService) {
 
-    $scope.myData = [];//dataService.sendPost('useraccess/TestApi', '31415');
 
     var columnDefs = [{ field: 'Login', displayName: 'Имя пользователя', width: 300 },
                       { field: 'Name', displayName: 'Имя', width: 300 },
@@ -8,12 +7,12 @@
 
     $scope.selectedItems = [];
 
-    $scope.reload = function() {
-        var promise = dataService.sendPost('useraccess/TestApi', '31415');
+    $scope.reload = function () {
+        var promise = dataService.sendPost('UserAccess/UserList', '');
         promise.then(function (val) {
             $scope.myData = val;
         }, function (reason) {
-            alert('Failed load');
+            //alert('Failed load');
         });
     };
 
@@ -24,6 +23,8 @@
         selectedItems: $scope.selectedItems,
         multiSelect: false
     };
+
+    $scope.reload();
 
     /*EDIT*/
 
@@ -41,15 +42,15 @@
             }
         });
 
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-            console.log('returned ' + selectedItem);
+        modalInstance.result.then(function (id) {
+            $scope.reload();
+            console.log('returned ' + id);
         }, function () {
             console.log('returned cancel');;
         });
     };
 
-    $scope.lock = function() {
+    $scope.lock = function () {
         console.log('Зобанено');
     };
 
@@ -60,20 +61,36 @@
 
 });
 
-app.controller('UserEditCtrl', function ($scope, $rootScope, $uibModalInstance, selectedItem) {
+app.controller('UserEditCtrl', function ($scope, $rootScope, dataService, $uibModalInstance, selectedItem) {
 
-    $scope.selectedItem = selectedItem;
-    
+    if (selectedItem) {
+        $scope.login = selectedItem.login;
+    } else {
+        $scope.login = '';
+    }
+    $scope.password = null;
+    $scope.passwordRepeat = null;;
+
     $scope.ok = function () {
-        if (!selectedItem.Password || selectedItem.Password === '') {
+        if (!$scope.password || $scope.password === '') {
             $rootScope.$broadcast('ErrorMessage', 'Не допускается пустой пароль');
             return;
         };
-        if ($scope.selectedItem.Password !== selectedItem.PasswordRepeat) {
+        if ($scope.password !== $scope.passwordRepeat) {
             $rootScope.$broadcast('ErrorMessage', 'Пароли не совпадают');
             return;
         }
-        $uibModalInstance.close($scope.selectedItem); //тут можно передать переменную
+
+        var promise = dataService.sendPost('UserAccess/AddUser', {
+            Login: $scope.login,
+            Password: $scope.password
+        });
+        promise.then(function (val) {
+            console.log('Added user id=' + val);
+            $uibModalInstance.close(val);
+        });
+
+         
     };
 
     $scope.cancel = function () {

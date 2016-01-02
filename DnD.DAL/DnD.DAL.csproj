@@ -52,8 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Dictonary\Race.cs" />
+    <Compile Include="Entities\Users\LoginUser.cs" />
     <Compile Include="Interfaces\UserAccess\IUserOperations.cs" />
+    <Compile Include="Operations\Dictionary\IDictionaryOperations.cs" />
+    <Compile Include="Models\UserAccess\List\Dictionary\RaceListModel.cs" />
+    <Compile Include="Models\UserAccess\LoginUserModel.cs" />
     <Compile Include="Models\UserAccess\List\UserListModel.cs" />
+    <Compile Include="Operations\Dictionary\DictionaryOperations.cs" />
+    <Compile Include="Operations\UserAccess\IUserDb.cs" />
     <Compile Include="Operations\UserAccess\UserOperations.cs" />
     <Compile Include="Repositories\General\ApplicationCore.cs" />
     <Compile Include="Repositories\General\DbContext.cs" />
@@ -68,6 +75,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DnD.Core\DnD.Core.csproj">
+      <Project>{FD9F38EE-76FD-4CA1-B961-450C9422CFFB}</Project>
+      <Name>DnD.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\Dictionary\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,18 +1,14 @@
 ﻿
 using System;
-using NHibernate.Mapping.Attributes;
 
 namespace DnD.DAL.Entities.Users
 {
-    public class CreateUser
+    public class LoginUser
     {
-
-        public Guid id { get; set; }
+        public string key { get; set; }
 
         public int result { get; set; }
 
         public string errormessage { get; set; }
-
-       
     }
 }

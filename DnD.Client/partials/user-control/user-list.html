@@ -1,34 +1,34 @@
-﻿<div class="container" ng-controller="UserCtrl">
+﻿<div class="container">
     <div class="buttonBlock">
-        <a class="btn btn-primary" ng-click="openEdit()">Добавить</a>
-        <a class="btn btn-primary" ng-click="lockUser()">Заблокировать</a>
-        <a class="btn btn-primary" ng-click="reload()">reload</a>
+        <a class="btn btn-primary" ng-click="openEdit()" ng-disabled="selectedItems.length!=0">Добавить</a>
+        <!--<a class="btn btn-primary" ng-click="lockUser()">Заблокировать</a>-->
     </div>
     <div class="gridStyle" ng-grid="gridOptions"></div>
 </div>
 
 <script type="text/ng-template" id="userModalContent.html">
     <div class="modal-header">
-        <h3 class="modal-title" ng-if="selectedItem.Login == null">Создание пользователя</h3>
-        <h3 class="modal-title" ng-if="selectedItem.Login != null">Редактирование пользователя</h3>
+        <h3 class="modal-title" ng-if="login == null">Создание пользователя</h3>
+        <h3 class="modal-title" ng-if="login != null">Редактирование пользователя</h3>
     </div>
     <div class="modal-body">
         <div class="form-group">
             <label class="form-label">Имя пользователя</label>
-            <input type="text" ng-model="selectedItem.Login" />
+            <input type="text" ng-model="login" />
         </div>
         <div class="form-group">
             <label class="form-label">Пароль</label>
-            <input type="password" ng-model="selectedItem.Password" />
+            <input type="password" ng-model="password" />
+            <spqn>{{password}}</spqn>
         </div>
         <div class="form-group">
             <label class="form-label">Повторите пароль</label>
-            <input type="password" ng-model="selectedItem.PasswordRepeat" />
+            <input type="password" ng-model="passwordRepeat" />
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="ok()" >OK</button>
-        <!--ng-disabled="selectedItem.Password!=selectedItem.PasswordRepeat || !selectedItem.Password || selectedItem.Password ==''"-->
+        <button class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="selectedItem.Password!=selectedItem.PasswordRepeat || !selectedItem.Password || selectedItem.Password ==''" >OK</button>
+
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </script>

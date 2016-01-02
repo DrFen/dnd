@@ -38,7 +38,7 @@ app.getCookie = function (name) {
 }
 
 app.userParams = {
-    UserKey: app.getCookie('UserKey')
+    // UserKey: app.getCookie('UserKey')
 };
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -46,20 +46,23 @@ app.config(['$routeProvider', function ($routeProvider) {
       // Pages
       .when("/about", { templateUrl: "partials/about.html", controller: "PageStaticCtrl" })
       //users
-      .when("/users", { templateUrl: "partials/user-control/user-list.html", controller: "UserCtrl" });
-
+      .when("/users", { templateUrl: "partials/user-control/user-list.html", controller: "UserCtrl" })
+      //Main dictionaries
+      .when("/race",    { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "RaceCtrl" })
+    //  .when("/classes", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "ClassCtrl" })
+    ;
 }]);
 app.factory('dataService', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {
     var url = 'http://localhost:10869/api/';
     var dataFactory = {};
 
 
-    dataFactory.sendPost = function(apiPath, value) {
-        $http.defaults.headers.common['UserKey'] = app.userParams.UserKey;
+    dataFactory.sendPost = function (apiPath, value) {
+        $http.defaults.headers.common['UserKey'] = app.getCookie('UserKey');
 
-        return $q(function(resolve, reject) {
-            $http.post(url + apiPath, value)
-                .success(function(data, status, headers, config) {
+        return $q(function (resolve, reject) {
+            $http.post(url + apiPath, { Value: value })
+                .success(function (data, status, headers, config) {
                     resolve(data.Value);
                 })
                 .error(function (data, status, headers, config) {
@@ -74,7 +77,7 @@ app.factory('dataService', ['$http', '$rootScope', '$q', function ($http, $rootS
     return dataFactory;
 }]);
 
-app.controller('MessageCtrl', function ($scope, $modal) {
+app.controller('MessageCtrl', function ($scope, $uibModal) {
 
     $scope.modalInstance = null;
     $scope.functionSuccess = null;
@@ -98,7 +101,7 @@ app.controller('MessageCtrl', function ($scope, $modal) {
     $scope.$on('ErrorMessage', function (event, errorMessage) {
         $scope.message = errorMessage;
         $scope.windowType = 'error';
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'message.html',
             scope: $scope
         });
@@ -108,7 +111,7 @@ app.controller('MessageCtrl', function ($scope, $modal) {
         $scope.message = questionMessage;
         $scope.functionSuccess = functionSuccess;
         $scope.windowType = 'question';
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'message.html',
             scope: $scope
         });
@@ -117,19 +120,24 @@ app.controller('MessageCtrl', function ($scope, $modal) {
 
 });
 
+app.controller('LoginCtrl', function ($scope, $uibModal, dataService) {
 
-app.controller('LoginCtrl', function ($scope, $modal) {
-
+    $scope.loginModel = {
+        Login: 'login',
+        Password: 'password'
+    };
 
     $scope.loginUser = function () {
-        var key = 'test';
-        app.userParams.UserKey = key;
-        app.setCookie('UserKey', key);
-        $scope.modalInstance.clode();
+        var promise = dataService.sendPost('UserAccess/Login', $scope.loginModel);
+        promise.then(function (val) {
+            app.setCookie('UserKey', val);
+        });
+
+        $scope.modalInstance.dismiss();
     };
 
     $scope.$on('LoginMessage', function (event) {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'login.html',
             scope: $scope
         });

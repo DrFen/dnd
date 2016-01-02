@@ -304,8 +304,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="partials\about.html" />
+    <Content Include="partials\game-dictionary\simple-dictionary.html" />
     <Content Include="partials\user-control\user-list.html" />
     <Content Include="scripts\app.js" />
+    <Content Include="scripts\game-dictionary\race.js" />
     <Content Include="scripts\user-control\user-control.js" />
     <Content Include="vendor\angular-bootstrap\ui-bootstrap-tpls-0.14.3.min.js" />
     <Content Include="vendor\angular\ng-grid.js" />

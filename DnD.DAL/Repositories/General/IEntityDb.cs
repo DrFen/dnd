@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using NHibernate;
 
 namespace DnD.DAL.Repositories.General
 {
     public interface IEntityDb<T> where T:class
     {
-        List<T> GetList();
+        IQueryOver<T> GetList();
     }
 }
