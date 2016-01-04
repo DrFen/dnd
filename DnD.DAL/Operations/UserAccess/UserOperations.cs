@@ -4,6 +4,7 @@ using System.Linq;
 using DnD.Core.Enums;
 using DnD.Core.REST;
 using DnD.DAL.Entities.Users;
+using DnD.DAL.Interfaces;
 using DnD.DAL.Interfaces.UserAccess;
 using DnD.DAL.Models.UserAccess;
 using DnD.DAL.Models.UserAccess.List;

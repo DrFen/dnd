@@ -17,10 +17,6 @@ namespace DnD.REST
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         {
-            
-                
-               
-
             var res = base.SendAsync(request, cancellationToken).Result;
             res.Headers.Add("Cache-Control", "no-cache");
             res.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");

@@ -23,7 +23,7 @@ namespace DnD.REST.Controllers
         public Response<List<UserListModel>> TestApi(Request<string> req)
         {
 
-            return new Response<List<UserListModel>>(_userOperations.GetUserList(), 0, "без ошибок");
+            return new Response<List<UserListModel>>(_userOperations.GetUserList());
         }
 
         [Route("Login")]

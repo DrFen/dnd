@@ -1,37 +1,43 @@
 'use strict';
 app.controller('MainCtrl', function($scope, $location) {
-    console.log('Я работаю!');
     $scope.checkedMenuItem = null;
 
     $scope.menuItems = [
         {
             Name: 'Адмнистрирование',
-            Id: 1,
+            Id: '1',
             RootId: null,
             Action: null
         }, {
             Name: 'Справочники d&d',
-            Id: 2,
+            Id: '2',
             RootId: null,
             Action: null
         },
         {
             Name: 'Пользователи',
-            Id: 11,
-            RootId: 1,
+            Id: '1.1',
+            RootId: '1',
             Action: 'users'
         },
         {
             Name: 'Расы',
-            Id: 21,
-            RootId: 2,
-            Action: 'race'
+            Id: '2.1',
+            RootId: '2',
+            Action: null
         },
         {
-            Name: 'Классы',
-            Id: 22,
-            RootId: 2,
-            Action: 'classes'
+            Name: 'Расы',
+            Id: '2.1.1',
+            RootId: '2.1',
+            Action: 'race'
+        }
+        ,
+        {
+            Name: 'Расы-варианты',
+            Id: '2.1.2',
+            RootId: '2.1',
+            Action: 'subrace'
         }
     ];
 

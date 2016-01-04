@@ -6,14 +6,14 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using DnD.DAL.Entities.Users;
+using DnD.DAL.Interfaces;
 using NHibernate;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Transform;
 
 namespace DnD.DAL.Repositories.General
 {
-    public class RepositoryHelper<T> : IEntityDb<T> where T : class
+    public class RepositoryHelper<T> : IEntityDb<T> where T : class, IEntity
     {
 
 
@@ -30,7 +30,7 @@ namespace DnD.DAL.Repositories.General
 
 
 
-        public virtual void Insert(T entity)
+        public void Upsert(T entity)
         {
             using (var transaction = _session.BeginTransaction())
             {
@@ -39,25 +39,32 @@ namespace DnD.DAL.Repositories.General
             }
         }
 
-        public void Update(T entity)
+        public void Delete(Guid id)
         {
             using (var transaction = _session.BeginTransaction())
             {
-                _session.Save(entity);
+                var entity = GetById(id);
+                _session.Delete(entity);
                 transaction.Commit();
             }
         }
+
 
         public static Stream Register()
         {
             HbmSerializer.Default.Validate = true;
-            return HbmSerializer.Default.Serialize(Assembly.GetAssembly(typeof(User)));
+            var a = (Assembly.GetAssembly(typeof (T)));
+            return HbmSerializer.Default.Serialize(a);
         }
         public IQueryOver<T> GetList()
         {
-
             return _session.QueryOver<T>();
-            //.QueryOver<T>()
+
+        }
+
+        public T GetById(Guid id)
+        {
+            return _session.QueryOver<T>().List().First(f => f.Id.Equals(id));
 
         }
 
@@ -67,12 +74,12 @@ namespace DnD.DAL.Repositories.General
             var paramStr = "";
 
 
-            foreach (var parameter in parameterList.Where(w=>w.Direction.Equals(ParameterDirection.Input)))
+            foreach (var parameter in parameterList.Where(w => w.Direction.Equals(ParameterDirection.Input)))
             {
-                if (!queryStr.Equals("") )
+                if (!queryStr.Equals(""))
                     queryStr = queryStr + ", ";
 
-                    queryStr = queryStr + ":" + parameter.ParameterName;
+                queryStr = queryStr + ":" + parameter.ParameterName;
 
             }
 
@@ -81,14 +88,14 @@ namespace DnD.DAL.Repositories.General
                 if (!paramStr.Equals(""))
                     paramStr = paramStr + ", ";
 
-                paramStr = paramStr +  parameter.ParameterName + " AS " + parameter.SourceColumn;
+                paramStr = paramStr + parameter.ParameterName + " AS " + parameter.SourceColumn;
 
             }
-            var query = _session.CreateSQLQuery("SELECT "+ paramStr + " FROM " + procedureName + "(" + queryStr + "); ");
+            var query = _session.CreateSQLQuery("SELECT " + paramStr + " FROM " + procedureName + "(" + queryStr + "); ");
             AddStoredProcedureParameters(query, parameterList);
             using (var transaction = _session.BeginTransaction())
             {
-               // var answer = query.UniqueResult();
+                // var answer = query.UniqueResult();
                 var answer = query.SetResultTransformer(Transformers.AliasToBean<TOut>()).List<TOut>().ToList();
                 transaction.Commit();
                 return answer;

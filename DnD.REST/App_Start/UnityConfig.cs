@@ -1,7 +1,10 @@
 using Microsoft.Practices.Unity;
 using System.Web.Http;
+using System.Web.Mvc;
 using DnD.DAL.Entities.Dictonary;
 using DnD.DAL.Entities.Users;
+using DnD.DAL.Interfaces;
+using DnD.DAL.Interfaces.Dictionary;
 using DnD.DAL.Interfaces.UserAccess;
 using DnD.DAL.Operations.Dictionary;
 using DnD.DAL.Operations.UserAccess;
@@ -19,7 +22,12 @@ namespace DnD.REST
 
             RegisterTypes(container);
 
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            var resolver = new UnityDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = resolver;
+            Core.REST.Resolver.DepResolver = resolver;
+            Core.REST.Resolver.Container = container;
+
+            // DependencyResolver.SetResolver(resolver);
         }
 
         private static void RegisterTypes(IUnityContainer container)
@@ -30,9 +38,13 @@ namespace DnD.REST
             #endregion
 
             #region DbModels
+            container.RegisterInstance(typeof(IEntityDb<Subrace>));
             container.RegisterType<IEntityDb<Race>, Race.RaceDb>();
 
-            container.RegisterInstance(typeof(UserDb));
+            container.RegisterInstance(typeof(IEntityDb<Race>));
+            container.RegisterType<IEntityDb<Subrace>, Subrace.SubRaceDb>();
+
+
             container.RegisterType<IUserDb<User>, UserDb>();
             #endregion
         }

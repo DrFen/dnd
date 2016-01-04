@@ -5,8 +5,8 @@ using NHibernate.Mapping.Attributes;
 
 namespace DnD.DAL.Entities.Dictonary
 {
-    [Class(Table = "t_race", Schema = "character_dict")]
-    public class Race : IComboValue
+    [Class(Table = "t_subrace", Schema = "character_dict")]
+    public class Subrace : IComboValue
     {
         [Id(0, Column = "id", Type = "guid", Name = "Id")]
         [Generator(1, Class = "DnD.DAL.Repositories.General.GuidGeneration, DnD.Dal")]
@@ -18,18 +18,15 @@ namespace DnD.DAL.Entities.Dictonary
         [Property(Column = "description", Type = "String")]
         public virtual string Description { get; set; }
 
-        /*private IList<Subrace> _subraces;
+        [Property(Column = "race_id", Type = "guid")]
+        public virtual Guid RaceId { get; set; }
 
-        [Bag(0, Name = "Subraces")]
-        [Key(1, Column = "id")]
-        [OneToMany(2, ClassType = typeof(Subrace))]
-        public virtual IList<Subrace> Subraces
-        {
-            get { return _subraces ?? (_subraces = new List<Subrace>()); }
-            set { _subraces = value; }
-        }*/
 
-        public class RaceDb : RepositoryHelper<Race>
+       
+      /* [ManyToOne(Name = "Race", ClassType = typeof(Race), Column = "race_id")]
+        public virtual Race Race { get; set; }*/
+
+        public class SubRaceDb : RepositoryHelper<Subrace>
         {
         }
     }

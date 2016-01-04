@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using DnD.DAL.Entities.Users;
+﻿using DnD.DAL.Entities.Users;
 using DnD.DAL.Repositories.General;
 
-namespace DnD.DAL.Operations.UserAccess
+namespace DnD.DAL.Interfaces
 {
     public interface IUserDb<T> : IEntityDb<T> where T : class
     {

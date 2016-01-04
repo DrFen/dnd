@@ -1,31 +1,45 @@
-﻿app.controller('RaceCtrl', function ($scope, $rootScope, $location, $uibModal, dataService) {
-    
-
-
-    var listUrl = 'Dictionary/RaceList';
-    var editUrl = 'Dictionary/RaceEdit';
-    var deletetUrl = 'Dictionary/RaceDelete';
-    var templateHtml = 'partials/game-dictionary/race-edit.html';
+﻿app.controller('SubraceCtrl', function ($scope, $rootScope, $location, $uibModal, dataService) {
+   
+    var listUrl = 'Dictionary/SubraceList';
+    var editUrl = 'Dictionary/SubraceEdit';
+    var deletetUrl = 'Dictionary/SubraceDelete';
+    var templateHtml = 'partials/game-dictionary/subrace-edit.html';
 
     var columnDefs = [{ field: 'Name', displayName: 'Наименование', width: 300 },
+                      { field: 'RaceName', displayName: 'Раса', visible: false },
+                      { field: 'RaceId', displayName:'RaceId', visible: false },
                       { field: 'Description', displayName: 'Описание' },
-                      { field: 'Id', displayName: 'id', visible: false }] ;
+                      { field: 'Id', displayName: 'id', visible: false }];
 
 
+
+    /*******************************/
+    
     $scope.selectedItems = [];
     $scope.filterOptions = {
         filterText: ''
     };
+    $scope.collapsed = true;
 
+    $scope.test = function() { debugger; };
 
+   
     $scope.gridOptions = {
         data: 'myData',
         columnDefs: columnDefs,
         selectedItems: $scope.selectedItems,
         enableCellEdit: true,
         multiSelect: false,
-        filterOptions: $scope.filterOptions
+        //
+        showGroupPanel: false,
+        groups: ['RaceName'],
+        //
+        filterOptions: $scope.filterOptions,
+        onRegisterApi: function (api) {
+            $scope.gridApi = api;
+        }
     };
+
 
     $scope.$on('ngGridEventEndCellEdit', function (evt) {
         var promise = dataService.sendPost(editUrl, evt.targetScope.row.entity);
@@ -42,7 +56,8 @@
     };
 
     $scope.add = function () {
-        $scope.editModel = { Id: null, Name: '', Description: '' };
+        $scope.reloadRaces();
+        $scope.editModel = { Id: null, Name: '', Description: '', RaceId: null };
         $scope.modalInstance = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -51,6 +66,7 @@
     };
 
     $scope.edit = function () {
+        $scope.reloadRaces();
         $scope.editModel = $scope.selectedItems[0];
         $scope.modalInstance = $uibModal.open({
             animation: true,
@@ -72,6 +88,16 @@
         });
     };
 
+    $scope.editAllowed = function () {
+        if (!editModel.Name || editModel.Name === '')
+            return false;
+
+        if (!editModel.RaceId)
+            return false;
+        
+        return true;
+    };
+
     $scope.delete = function () {
         if (!$scope.selectedItems)
             return;
@@ -85,6 +111,23 @@
             });
         });
     };
-   $scope.reload();
 
+
+    /*
+     COMBOS
+     */
+    $scope.races = [];
+
+    $scope.reloadRaces = function () {
+        var promise = dataService.sendPost('Combo/Race', true);
+        promise.then(function (val) {
+            $scope.races = val;
+        });
+    };
+
+    $scope.select2Config = {
+       };
+
+    $scope.reload();
+    
 });

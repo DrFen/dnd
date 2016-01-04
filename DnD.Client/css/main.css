@@ -151,16 +151,30 @@ footer {
     padding: 2px;
 }
 
-.buttonBlock > a {
-    background-image: -webkit-linear-gradient(top,#B7B9BB 0,#262627 100%);
-    border-color: black;;
-}
+    .buttonBlock > a {
+        background-image: -webkit-linear-gradient(top,#B7B9BB 0,#262627 100%);
+        border-color: black;
+        ;
+    }
 
-.buttonBlock > .btn-primary:hover, .btn-primary:focus {
-    background-color: #151414;
-    background-position: 0 -15px;
-}
+    .buttonBlock > .btn-primary:hover, .btn-primary:focus {
+        background-color: #151414;
+        background-position: 0 -15px;
+    }
+
+    .buttonBlock > .search {
+        display: inline-block;
+        padding: 3px;
+        float: right;
+    }
+
 
 .form-group > .form-label {
     width: 25%;
+    vertical-align: top;
+}
+
+.form-group > textarea {
+    width: 70%;
+    height: 100px;
 }

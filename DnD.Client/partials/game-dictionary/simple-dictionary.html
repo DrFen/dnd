@@ -1,7 +1,14 @@
 ﻿<div class="container">
     <div class="buttonBlock">
         <a class="btn btn-primary" ng-click="add()">Добавить</a>
-        <a class="btn btn-primary" ng-click="edit()"ng-if="selectedItems.length!=0">Редактировать</a>
+        <a class="btn btn-primary" ng-click="edit()" ng-if="selectedItems.length!=0">Редактировать</a>
+        <a class="btn btn-primary" ng-click="delete()" ng-if="selectedItems.length!=0">Удалить</a>
+        <a class="btn btn-primary" ng-click="test()">test</a>
+        <div class="search">
+            <span><strong>Быстрый поиск:</strong></span>
+            <input type="text" ng-model="filterOptions.filterText" ng-change="test()" />
+        </div>
     </div>
+    
     <div class="gridStyle" ng-grid="gridOptions"></div>
 </div>

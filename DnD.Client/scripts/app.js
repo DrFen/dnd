@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap']);
+var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngSanitize']);
 
 app.setCookie = function (name, value, options) {
     options = options || {};
@@ -37,10 +37,6 @@ app.getCookie = function (name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-app.userParams = {
-    // UserKey: app.getCookie('UserKey')
-};
-
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       // Pages
@@ -48,7 +44,8 @@ app.config(['$routeProvider', function ($routeProvider) {
       //users
       .when("/users", { templateUrl: "partials/user-control/user-list.html", controller: "UserCtrl" })
       //Main dictionaries
-      .when("/race",    { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "RaceCtrl" })
+      .when("/race", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "RaceCtrl" })
+      .when("/subrace", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "SubraceCtrl" })
     //  .when("/classes", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "ClassCtrl" })
     ;
 }]);
@@ -63,7 +60,25 @@ app.factory('dataService', ['$http', '$rootScope', '$q', function ($http, $rootS
         return $q(function (resolve, reject) {
             $http.post(url + apiPath, { Value: value })
                 .success(function (data, status, headers, config) {
-                    resolve(data.Value);
+                    
+
+                    if (data.hasOwnProperty('Value')) {
+                        if (data.ErrorCode !== 1) {
+                            $rootScope.$broadcast("ErrorMessage", data.ErrorMessage + '. Код(' + data.ErrorCode + ')');
+                            reject();
+                            return;
+                        };
+                        resolve(data.Value);
+                        return;
+                    }
+
+                    if (data.hasOwnProperty('MessageDetail')) {
+                        $rootScope.$broadcast("ErrorMessage", data.MessageDetail);
+                        reject();
+                        return;
+                    }
+
+
                 })
                 .error(function (data, status, headers, config) {
                     if (status === 403) {

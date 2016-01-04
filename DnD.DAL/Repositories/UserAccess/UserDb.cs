@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using DnD.DAL.Entities.Users;
+using DnD.DAL.Interfaces;
 using DnD.DAL.Operations.UserAccess;
 using DnD.DAL.Repositories.General;
 
