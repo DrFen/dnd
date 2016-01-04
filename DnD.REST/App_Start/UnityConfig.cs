@@ -38,11 +38,9 @@ namespace DnD.REST
             #endregion
 
             #region DbModels
-            container.RegisterInstance(typeof(IEntityDb<Subrace>));
             container.RegisterType<IEntityDb<Race>, Race.RaceDb>();
-
-            container.RegisterInstance(typeof(IEntityDb<Race>));
             container.RegisterType<IEntityDb<Subrace>, Subrace.SubRaceDb>();
+            container.RegisterType<IEntityDb<ItemType>, ItemType.ItemTypeDb>();
 
 
             container.RegisterType<IUserDb<User>, UserDb>();

@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngSanitize']);
+var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngSanitize', 'ui.tree']);
 
 app.setCookie = function (name, value, options) {
     options = options || {};
@@ -46,7 +46,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       //Main dictionaries
       .when("/race", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "RaceCtrl" })
       .when("/subrace", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "SubraceCtrl" })
-    //  .when("/classes", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "ClassCtrl" })
+      .when("/item-type", { templateUrl: "partials/game-dictionary/item-type-list.html", controller: "ItemTypeCtrl" })
     ;
 }]);
 app.factory('dataService', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {

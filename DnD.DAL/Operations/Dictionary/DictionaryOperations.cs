@@ -6,7 +6,8 @@ using DnD.Core.REST;
 using DnD.DAL.Entities.Dictonary;
 using DnD.DAL.Interfaces;
 using DnD.DAL.Interfaces.Dictionary;
-using DnD.DAL.Models.Dictionary;
+using DnD.DAL.Models.Dictionary.Edit;
+using DnD.DAL.Models.Dictionary.List;
 using DnD.DAL.Repositories.General;
 
 namespace DnD.DAL.Operations.Dictionary
@@ -15,15 +16,18 @@ namespace DnD.DAL.Operations.Dictionary
     {
         private readonly IEntityDb<Race> _raceContext;
         private readonly IEntityDb<Subrace> _subraceContext;
+        private readonly IEntityDb<ItemType> _itemTypeContext;
 
         public DictionaryOperations(IEntityDb<Race> raceContext,
-                                    IEntityDb<Subrace> subraceContext)
+                                    IEntityDb<Subrace> subraceContext,
+                                    IEntityDb<ItemType> itemTypeContext)
         {
             _raceContext = raceContext;
             _subraceContext = subraceContext;
+            _itemTypeContext = itemTypeContext;
         }
 
-        public Response<bool> DeleteEntity<T>(Guid id, IEntityDb<T> context ) where T: class , IEntity
+        public Response<bool> DeleteEntity<T>(Guid id, IEntityDb<T> context) where T : class, IEntity
         {
             try
             {
@@ -69,23 +73,23 @@ namespace DnD.DAL.Operations.Dictionary
         #endregion
 
         #region Subrace
-       public Response<List<SubraceListModel>> GetSubraceList()
+        public Response<List<SubraceListModel>> GetSubraceList()
         {
             return new Response<List<SubraceListModel>>
             {
-                ErrorCode = (int) ErrorEnum.Ok,
+                ErrorCode = (int)ErrorEnum.Ok,
                 ErrorMessage = "",
                 Value = (from subrace in _subraceContext.GetList().List()
-                    join race in _raceContext.GetList().List() on subrace.RaceId equals race.Id
-                    orderby race.Name, subrace.Name
-                    select new SubraceListModel
-                    {
-                        Id = subrace.Id,
-                        Name = subrace.Name,
-                        Description = subrace.Description,
-                        RaceId = race.Id,
-                        RaceName = race.Name
-                    }
+                         join race in _raceContext.GetList().List() on subrace.RaceId equals race.Id
+                         orderby race.Name, subrace.Name
+                         select new SubraceListModel
+                         {
+                             Id = subrace.Id,
+                             Name = subrace.Name,
+                             Description = subrace.Description,
+                             RaceId = race.Id,
+                             RaceName = race.Name
+                         }
                     ).ToList()
 
             };
@@ -105,6 +109,67 @@ namespace DnD.DAL.Operations.Dictionary
         public Response<bool> DeleteSubrace(Guid id)
         {
             return DeleteEntity(id, _subraceContext);
+        }
+        #endregion
+
+        #region ItemType
+
+        public Response<List<ItemTypeListModel>> ItemTypeList()
+        {
+            var originalList = _itemTypeContext.GetList().List().ToList();
+
+            return new Response<List<ItemTypeListModel>>
+            {
+                ErrorCode = (int) ErrorEnum.Ok,
+                ErrorMessage = "",
+                Value = originalList.Where(w => w.RootId.Equals(null)).Select(s => new ItemTypeListModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description,
+                    Plural = s.Plural,
+                    RootId = s.RootId,
+                    Nodes = AddToAnswer(originalList, s.Id)
+                }).ToList()
+            };
+        }
+
+        private List<ItemTypeListModel> AddToAnswer(List<ItemType> originalList, Guid addedId)
+        {
+            var childList = originalList.Where(w => w.RootId.Equals(addedId)).ToList();
+
+            if (!childList.Any())
+                return new List<ItemTypeListModel>();
+
+            return childList.Select(child => new ItemTypeListModel
+            {
+                Id = child.Id,
+                Name = child.Name,
+                Description = child.Description,
+                Plural = child.Plural,
+                RootId = child.RootId,
+                Nodes = AddToAnswer(originalList, child.Id)
+            }).ToList();
+        }
+
+        public Response<bool> UpdateItemType(ItemTypeEditModel updateModel)
+        {
+
+            var currentEntity = updateModel.Id == null
+                ? new ItemType()
+                : _itemTypeContext.GetById((Guid) updateModel.Id);
+
+            currentEntity.Name = updateModel.Name;
+            currentEntity.Description = updateModel.Description ?? "";
+            currentEntity.RootId = updateModel.RootId;
+            currentEntity.Plural = updateModel.Plural;
+            _itemTypeContext.Upsert(currentEntity);
+            return new Response<bool>(true);
+        }
+
+        public Response<bool> DeleteItemType(Guid id)
+        {
+            return DeleteEntity(id, _itemTypeContext);
         }
         #endregion
     }

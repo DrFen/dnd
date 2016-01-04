@@ -1,0 +1,34 @@
+﻿
+<div class="container">
+    <div class="buttonBlock">
+        <a class="btn btn-primary" ng-click="add()">Добавить</a>
+        <a class="btn btn-primary" ng-click="edit()" ng-if="editModel">Редактировать</a>
+        <a class="btn btn-primary" ng-click="delete()" ng-if="editModel">Удалить</a>
+       <!--<div class="search">
+            <span><strong>Быстрый поиск:</strong></span>
+            <input type="text" ng-model="filterOptions.filterText" ng-change="test()" />
+        </div>--> 
+    </div>
+
+
+    <script type="text/ng-template" id="nodes_renderer.html">
+        <div class="rowTree" ng-click="rowClick(node)" ng-class="{selected:editModel.Id==node.Id}">
+            <div ui-tree-handle data-drag-enabled="false" class="rowTreeCell">
+                {{node.Name}}
+            </div>
+            <div ui-tree-handle data-drag-enabled="false" class="rowTreeCell notFirstCell">
+                {{node.Description}}
+            </div>
+        </div>
+        <div ui-tree-nodes="" ng-model="node.Nodes">
+            <span ng-repeat="node in node.Nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+            </span>
+        </div>
+
+    </script>
+    <div ui-tree data-drag-enabled="false">
+        <div ui-tree-nodes="" ng-model="gridData" id="tree-root">
+            <span ng-repeat="node in gridData" ui-tree-node ng-include="'nodes_renderer.html'"></span>
+        </div>
+    </div>
+</div>

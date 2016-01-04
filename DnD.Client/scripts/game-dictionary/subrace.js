@@ -89,10 +89,10 @@
     };
 
     $scope.editAllowed = function () {
-        if (!editModel.Name || editModel.Name === '')
+        if (!$scope.editModel.Name || $scope.editModel.Name === '')
             return false;
 
-        if (!editModel.RaceId)
+        if (!$scope.editModel.RaceId)
             return false;
         
         return true;

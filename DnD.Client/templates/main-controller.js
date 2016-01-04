@@ -25,6 +25,13 @@ app.controller('MainCtrl', function($scope, $location) {
             Id: '2.1',
             RootId: '2',
             Action: null
+        }
+        ,
+        {
+            Name: 'Предметы',
+            Id: '2.2',
+            RootId: '2',
+            Action: null
         },
         {
             Name: 'Расы',
@@ -38,6 +45,12 @@ app.controller('MainCtrl', function($scope, $location) {
             Id: '2.1.2',
             RootId: '2.1',
             Action: 'subrace'
+        },
+        {
+            Name: 'Виды предметов',
+            Id: '2.2.1',
+            RootId: '2.2',
+            Action: 'item-type'
         }
     ];
 

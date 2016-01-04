@@ -154,7 +154,6 @@ footer {
     .buttonBlock > a {
         background-image: -webkit-linear-gradient(top,#B7B9BB 0,#262627 100%);
         border-color: black;
-        ;
     }
 
     .buttonBlock > .btn-primary:hover, .btn-primary:focus {
@@ -178,3 +177,31 @@ footer {
     width: 70%;
     height: 100px;
 }
+
+.rowTree {
+    white-space: nowrap;
+    background-color: #f3f3f3;
+    border-width: 1px;
+    border-style: solid;
+    /*border-bottom-style: none;*/
+    border-width: 1px;
+    margin: 1px;
+}
+.rowTree.selected {
+    background-color: #c9dde1;
+}
+
+    .rowTree > .rowTreeCell {
+        width: 30%;
+        display: inline-block;
+        font-weight: 100;
+        margin: 0px;
+        cursor: default;
+    }
+    .rowTree > .notFirstCell {
+        border-left-style: dotted;
+        border-left-color: gray;
+        border-left-width: 1px;
+    }
+  
+

@@ -3,7 +3,6 @@ using System.Web.Http;
 using DnD.Core.REST;
 using DnD.DAL.Entities.Dictonary;
 using DnD.DAL.Models;
-using DnD.DAL.Models.Dictionary;
 using DnD.DAL.Operations.Helpers;
 
 namespace DnD.REST.Controllers
@@ -25,6 +24,14 @@ namespace DnD.REST.Controllers
         {
 
             return new Response<List<ComboListModel>>(ComboValuesGetter<Subrace>.GetCombo());
+        }
+
+        [Route("ItemType")]
+        [HttpPost]
+        public Response<List<ComboListModel>> ItemTypeList(Request<bool> req)
+        {
+
+            return new Response<List<ComboListModel>>(ComboValuesGetter<ItemType>.GetCombo());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DnD.DAL.Models.Dictionary
+namespace DnD.DAL.Models.Dictionary.List
 {
     public class RaceListModel
     {

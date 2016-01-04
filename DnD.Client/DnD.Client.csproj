@@ -296,8 +296,6 @@
     <Content Include="bin\System.Web.WebPages.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebGrease.dll" />
-    <Content Include="Content\select.css" />
-    <Content Include="Content\select.min.css" />
     <Content Include="css\main.css" />
     <Content Include="css\vendor\ng-grid.css" />
     <Content Include="css\vendor\ng-grid.min.css" />
@@ -306,15 +304,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="partials\about.html" />
+    <Content Include="partials\game-dictionary\item-type-edit.html" />
+    <Content Include="partials\game-dictionary\item-type-list.html" />
     <Content Include="partials\game-dictionary\race-edit.html" />
     <Content Include="partials\game-dictionary\simple-dictionary.html" />
     <Content Include="partials\game-dictionary\subrace-edit.html" />
     <Content Include="partials\user-control\user-list.html" />
     <Content Include="scripts\app.js" />
+    <Content Include="scripts\game-dictionary\item-type.js" />
     <Content Include="scripts\game-dictionary\race.js" />
     <Content Include="scripts\game-dictionary\subrace.js" />
     <Content Include="scripts\user-control\user-control.js" />
+    <Content Include="templates\tree.js" />
     <Content Include="vendor\angular-bootstrap\ui-bootstrap-tpls-0.14.3.min.js" />
+    <Content Include="vendor\angular-ui-tree.js" />
+    <Content Include="vendor\angular-ui-tree.min.css" />
     <Content Include="vendor\angular\ng-grid.js" />
     <Content Include="vendor\angular\ng-grid.min.js" />
     <Content Include="scripts\page-static-controller.js" />

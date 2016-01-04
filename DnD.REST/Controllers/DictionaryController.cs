@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Web.Http;
 using DnD.Core.REST;
 using DnD.DAL.Interfaces.Dictionary;
-using DnD.DAL.Models.Dictionary;
+using DnD.DAL.Models.Dictionary.Edit;
+using DnD.DAL.Models.Dictionary.List;
 
 namespace DnD.REST.Controllers
 {
@@ -67,6 +68,32 @@ namespace DnD.REST.Controllers
         {
 
             return _dictionaryOperations.DeleteSubrace(req.Value);
+        }
+        #endregion
+
+        #region ItemType
+        [Route("ItemTypeList")]
+        [HttpPost]
+        public Response<List<ItemTypeListModel>> ItemTypeList(Request<bool> req)
+        {
+
+            return _dictionaryOperations.ItemTypeList();
+        }
+
+        [Route("ItemTypeEdit")]
+        [HttpPost]
+        public Response<bool> ItemTypeSave(Request<ItemTypeEditModel> req)
+        {
+
+            return _dictionaryOperations.UpdateItemType(req.Value);
+        }
+
+        [Route("ItemTypeDelete")]
+        [HttpPost]
+        public Response<bool> ItemTypeDelete(Request<Guid> req)
+        {
+
+            return _dictionaryOperations.DeleteItemType(req.Value);
         }
         #endregion
     }
