@@ -96,20 +96,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Campaighn\Campaighn.cs" />
     <Compile Include="Entities\Dictonary\ItemType.cs" />
     <Compile Include="Entities\Dictonary\Race.cs" />
     <Compile Include="Entities\Dictonary\SubRace.cs" />
     <Compile Include="Entities\Users\LoginUser.cs" />
-    <Compile Include="Interfaces\Dictionary\IDictionaryOperations.cs" />
+    <Compile Include="Entities\Users\Session.cs" />
     <Compile Include="Interfaces\IComboValue.cs" />
+    <Compile Include="Interfaces\Operations\ICampaighnOperations.cs" />
+    <Compile Include="Interfaces\Operations\IDictionaryOperations.cs" />
+    <Compile Include="Interfaces\Operations\IUserOperations.cs" />
+    <Compile Include="Models\Campaighn\CampaighnListAnswer.cs" />
     <Compile Include="Models\ComboListModel.cs" />
     <Compile Include="Models\Dictionary\Edit\ItemTypeEditModel.cs" />
     <Compile Include="Models\Dictionary\List\ItemTypeListModel.cs" />
     <Compile Include="Models\Dictionary\List\RaceListModel.cs" />
     <Compile Include="Models\Dictionary\List\SubraceListModel.cs" />
+    <Compile Include="Operations\Camaighn\CampaighnOperations.cs" />
     <Compile Include="Operations\Helpers\ComboValuesGetter.cs" />
     <Compile Include="Repositories\UserAccess\IUserDb.cs" />
-    <Compile Include="Interfaces\UserAccess\IUserOperations.cs" />
     <Compile Include="Models\UserAccess\LoginUserModel.cs" />
     <Compile Include="Models\UserAccess\List\UserListModel.cs" />
     <Compile Include="Operations\Dictionary\DictionaryOperations.cs" />

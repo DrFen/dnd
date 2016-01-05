@@ -44,9 +44,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       //users
       .when("/users", { templateUrl: "partials/user-control/user-list.html", controller: "UserCtrl" })
       //Main dictionaries
-      .when("/race", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "RaceCtrl" })
-      .when("/subrace", { templateUrl: "partials/game-dictionary/simple-dictionary.html", controller: "SubraceCtrl" })
+      .when("/race", { templateUrl: "partials/simple-dictionary.html", controller: "RaceCtrl" })
+      .when("/subrace", { templateUrl: "partials/simple-dictionary.html", controller: "SubraceCtrl" })
       .when("/item-type", { templateUrl: "partials/game-dictionary/item-type-list.html", controller: "ItemTypeCtrl" })
+        //campaighn
+      .when("/campaighn", { templateUrl: "partials/simple-dictionary.html", controller: "CampaighnCtrl" })
     ;
 }]);
 app.factory('dataService', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {

@@ -30,7 +30,7 @@ namespace DnD.DAL.Repositories.General
 
 
 
-        public void Upsert(T entity)
+        public virtual void Upsert(T entity)
         {
             using (var transaction = _session.BeginTransaction())
             {

@@ -4,7 +4,7 @@ using DnD.Core.REST;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
 
-namespace DnD.DAL.Interfaces.Dictionary
+namespace DnD.DAL.Interfaces.Operations
 {
     public interface IDictionaryOperations
     {

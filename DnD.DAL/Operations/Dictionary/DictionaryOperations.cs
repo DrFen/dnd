@@ -5,7 +5,7 @@ using DnD.Core.Enums;
 using DnD.Core.REST;
 using DnD.DAL.Entities.Dictonary;
 using DnD.DAL.Interfaces;
-using DnD.DAL.Interfaces.Dictionary;
+using DnD.DAL.Interfaces.Operations;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
 using DnD.DAL.Repositories.General;

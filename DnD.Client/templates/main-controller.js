@@ -14,6 +14,12 @@ app.controller('MainCtrl', function($scope, $location) {
             RootId: null,
             Action: null
         },
+         {
+             Name: 'Мастерская',
+             Id: '3',
+             RootId: null,
+             Action: null
+         },
         {
             Name: 'Пользователи',
             Id: '1.1',
@@ -51,6 +57,13 @@ app.controller('MainCtrl', function($scope, $location) {
             Id: '2.2.1',
             RootId: '2.2',
             Action: 'item-type'
+        }
+        ,
+        {
+            Name: 'Кампании',
+            Id: '3.1',
+            RootId: '3',
+            Action: 'campaighn'
         }
     ];
 

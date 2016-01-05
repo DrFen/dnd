@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using DnD.Core.REST;
-using DnD.DAL.Entities.Users;
 using DnD.DAL.Models.UserAccess;
 using DnD.DAL.Models.UserAccess.List;
 
-namespace DnD.DAL.Interfaces.UserAccess
+namespace DnD.DAL.Interfaces.Operations
 {
     public interface IUserOperations
     {

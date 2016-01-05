@@ -307,10 +307,11 @@
     <Content Include="partials\game-dictionary\item-type-edit.html" />
     <Content Include="partials\game-dictionary\item-type-list.html" />
     <Content Include="partials\game-dictionary\race-edit.html" />
-    <Content Include="partials\game-dictionary\simple-dictionary.html" />
+    <Content Include="partials\simple-dictionary.html" />
     <Content Include="partials\game-dictionary\subrace-edit.html" />
     <Content Include="partials\user-control\user-list.html" />
     <Content Include="scripts\app.js" />
+    <Content Include="scripts\campaighn\campaighn.js" />
     <Content Include="scripts\game-dictionary\item-type.js" />
     <Content Include="scripts\game-dictionary\race.js" />
     <Content Include="scripts\game-dictionary\subrace.js" />
@@ -362,7 +363,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="partials\campaighn\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="bin\ApplicationInsights.config" />

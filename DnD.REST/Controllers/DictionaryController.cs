@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using DnD.Core.REST;
-using DnD.DAL.Interfaces.Dictionary;
+using DnD.DAL.Interfaces.Operations;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
 
