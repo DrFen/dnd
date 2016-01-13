@@ -187,9 +187,10 @@ footer {
     border-width: 1px;
     margin: 1px;
 }
-.rowTree.selected {
-    background-color: #c9dde1;
-}
+
+    .rowTree.selected {
+        background-color: #c9dde1;
+    }
 
     .rowTree > .rowTreeCell {
         width: 30%;
@@ -198,10 +199,24 @@ footer {
         margin: 0px;
         cursor: default;
     }
+
     .rowTree > .notFirstCell {
         border-left-style: dotted;
         border-left-color: gray;
         border-left-width: 1px;
     }
-  
 
+.form-group-block {
+    clear: both;
+    height: 300px;
+}
+
+.select-grid {
+    width: 270px;
+    height: 250px;
+}
+
+.select-button {
+    width: 100%;
+    margin-bottom: 5px;
+}

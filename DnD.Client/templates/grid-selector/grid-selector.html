@@ -1,0 +1,21 @@
+﻿<div>
+    <table style="height:250px">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="select-grid" ng-grid="fullListGridOptions"></div>
+                </td>
+                <td>
+                    <input class="select-button" type="button" value=">>" ng-click="sendAllToWork()" />
+                    <input class="select-button" type="button" value=">"  ng-click="sendToWork()"/>
+                    <input class="select-button" type="button" value="<"  ng-click="sendFromWork()"/>
+                    <input class="select-button" type="button" value="<<" ng-click="sendAllFromWork()"/>
+                </td>
+                <td>
+                    <div class="select-grid" ng-grid="workListGridOptions"></div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,8 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title" ng-if="editModel.Id == null">Создание</h3>
+    <h3 class="modal-title" ng-if="editModel.Id != null">Редактирование</h3>
+</div>
+<div class="modal-body">
+    <label>Выбор доступных рас</label>
+    <grid-selector full-list-api="Combo/Race"></grid-selector>
+</div>

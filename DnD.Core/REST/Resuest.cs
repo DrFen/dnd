@@ -10,7 +10,7 @@ namespace DnD.Core.REST
 
         public string GetUserKey(HttpRequestMessage request)
         {
-            return request.Headers.SingleOrDefault(s => s.Key.Equals("UserKey")).Value.FirstOrDefault();
+            return ""; //request.Headers.SingleOrDefault(s => s.Key.Equals("UserKey")).Value.FirstOrDefault();
         }
     }
 }

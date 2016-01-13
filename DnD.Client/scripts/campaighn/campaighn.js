@@ -5,7 +5,7 @@
     var listUrl = 'Campaighn/List';
     var editUrl = 'Dictionary/RaceEdit';
     var deletetUrl = 'Dictionary/RaceDelete';
-    var templateHtml = 'partials/game-dictionary/race-edit.html';
+    var templateHtml = 'partials/campaighn/campaighn-edit.html';
 
     var columnDefs = [{ field: 'Name', displayName: 'Наименование', width: 300 },
                       { field: 'StartLevel', displayName: 'Начальный уровень' },
