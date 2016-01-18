@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DnD.Core.REST;
+using DnD.DAL.Models;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
 
@@ -18,6 +19,7 @@ namespace DnD.DAL.Interfaces.Operations
         Response<List<SubraceListModel>> GetSubraceList();
         Response<bool> UpdateSubrace(SubraceListModel updateModel);
         Response<bool> DeleteSubrace(Guid id);
+        Response<List<ComboListModel>> GetSubraceCombo();
         #endregion
 
         #region ItemType

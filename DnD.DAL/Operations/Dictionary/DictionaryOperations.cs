@@ -6,6 +6,7 @@ using DnD.Core.REST;
 using DnD.DAL.Entities.Dictonary;
 using DnD.DAL.Interfaces;
 using DnD.DAL.Interfaces.Operations;
+using DnD.DAL.Models;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
 using DnD.DAL.Repositories.General;
@@ -25,6 +26,9 @@ namespace DnD.DAL.Operations.Dictionary
             _raceContext = raceContext;
             _subraceContext = subraceContext;
             _itemTypeContext = itemTypeContext;
+
+            _subraceContext.SetSession(_raceContext.GetSession());
+            _itemTypeContext.SetSession(_raceContext.GetSession());
         }
 
         public Response<bool> DeleteEntity<T>(Guid id, IEntityDb<T> context) where T : class, IEntity
@@ -109,6 +113,19 @@ namespace DnD.DAL.Operations.Dictionary
         public Response<bool> DeleteSubrace(Guid id)
         {
             return DeleteEntity(id, _subraceContext);
+        }
+
+        public Response<List<ComboListModel>> GetSubraceCombo()
+        {
+            return new Response<List<ComboListModel>>(_subraceContext.GetList().List()
+                .Join(_raceContext.GetList().List(),
+                    sub => sub.RaceId,
+                    race => race.Id,
+                    (sub, race) => new ComboListModel
+                    {
+                        Id = sub.Id,
+                        Name = race.Name + " - " + sub.Name
+                    }).ToList());
         }
         #endregion
 

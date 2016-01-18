@@ -1,0 +1,18 @@
+
+<script type="text/ng-template" id="nodes_renderer.html">
+    <li class="tree-node" ng-class="{'tree-node-last': isLast(node.Id)}" ng-if="(node.RootId == null) || (getTreeType(node.RootId) == 2 )">
+        <div class="tree-expander" ng-class="{'expand-leaf':getTreeType(node.Id) == 0, 'expand-close':getTreeType(node.Id)== 1, 'expand-open':getTreeType(node.Id) == 2}" ng-click="changeLeafOpenStatus(node.Id)"></div>
+        <span class="tree-content" ng-click="selectNode(node.Id)" ng-class="{'selected-node': node.Id==selectedItem}">{{node.Name}}</span>
+    </li>
+
+    <ul ng-model="node.Nodes" ng-if="(node.RootId == null) || (getTreeType(node.RootId) == 2 )">
+        <li class="tree-node" ng-class="{'tree-node-last': isLast(node.Id)}" ng-repeat="node in node.Nodes" ng-include="'nodes_renderer.html'">
+    </ul>
+</script>
+
+
+
+
+<ul class="tree-container" ng-model="treeList">
+    <li class="tree-node" ng-class="{'tree-node-last': isLast(node.Id)}" ng-repeat="node in treeList" ng-include="'nodes_renderer.html'">
+</ul>

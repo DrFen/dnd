@@ -6,7 +6,7 @@
     var editUrl = 'Dictionary/RaceEdit';
     var deletetUrl = 'Dictionary/RaceDelete';
     var templateHtml = 'partials/game-dictionary/race-edit.html';
-
+    $scope.selectedBonus = {};
     var columnDefs = [{ field: 'Name', displayName: 'Наименование', width: 300 },
                       { field: 'Description', displayName: 'Описание' },
                       { field: 'Id', displayName: 'id', visible: false }] ;
@@ -85,6 +85,26 @@
             });
         });
     };
+
+    $scope.Bonuses = { selectedBonus:[]};
+
+    $scope.selectBonus = function () {
+        $scope.Bonuses.selectedBonus = ['asd'];
+        $scope.modalInstanceBonus = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            templateUrl: "/templates/attribute-select/attribute-select-modal.html",
+            size : 'lg'
+        });
+    };
+    $scope.closeSelect = function () {
+        $scope.selectedBonus = [];
+        $scope.modalInstanceBonus.dismiss();
+    };
+    $scope.saveSelect = function () {
+        $scope.modalInstanceBonus.dismiss();
+    };
+
    $scope.reload();
 
 });

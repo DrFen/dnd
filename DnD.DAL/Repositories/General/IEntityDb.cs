@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NHibernate;
 
 namespace DnD.DAL.Repositories.General
@@ -10,5 +9,12 @@ namespace DnD.DAL.Repositories.General
         T GetById(Guid id);
         void Upsert(T entity);
         void Delete(Guid id);
+        void Delete(T entity);
+        ITransaction StartTransaction();
+        void CommitTransaction(ITransaction transaction);
+        void RollbackTransaction(ITransaction transaction);
+
+        ISession GetSession();
+        void SetSession(ISession session);
     }
 }

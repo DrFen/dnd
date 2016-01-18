@@ -1,0 +1,14 @@
+﻿<div class="container">
+    <div class="buttonBlock">
+        <a class="btn btn-primary" ng-click="add()">Добавить</a>
+        <a class="btn btn-primary" ng-click="edit()" ng-if="selectedItems.length===1">Редактировать</a>
+    </div>
+    <div class="grid-tree-container">
+        <div class="tree-border">
+            <tree-helper tree-api='Attribute/TypeList' selected-item="treeData.selectedTreeNode"></tree-helper>
+        </div>
+        <div id="grid-container">
+            <div class="gridStyle" ng-grid="gridOptions"></div>
+        </div>
+    </div>
+</div>

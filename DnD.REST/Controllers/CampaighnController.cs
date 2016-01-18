@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using DnD.Core.REST;
 using DnD.DAL.Interfaces.Operations;
@@ -21,6 +22,20 @@ namespace DnD.REST.Controllers
         public Response<List<CampaighnListAnswer>> CampaighnList(Request<bool> req)
         {
             return _campaighnOperations.GetList(req.GetUserKey(Request));
+        }
+
+        [Route("RaceList")]
+        [HttpPost]
+        public Response<List<Guid>> RaceList(Request<Guid> req)
+        {
+            return _campaighnOperations.GetRace(req.Value);
+        }
+
+        [Route("Edit")]
+        [HttpPost]
+        public Response<bool> EditCampaighn(Request<CampaighnEditModel> req)
+        {
+            return _campaighnOperations.UpdateCampaighn(req.Value);
         }
     }
 }

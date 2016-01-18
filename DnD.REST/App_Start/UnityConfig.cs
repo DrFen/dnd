@@ -36,6 +36,7 @@ namespace DnD.REST
             container.RegisterType<IUserOperations, UserOperations>();
             container.RegisterType<IDictionaryOperations, DictionaryOperations>();
             container.RegisterType<ICampaighnOperations, CampaighnOperations>();
+            container.RegisterType<IAttributeOperations, AttribureOperations>();
             #endregion
 
             #region DbModels
@@ -43,7 +44,9 @@ namespace DnD.REST
             container.RegisterType<IEntityDb<Subrace>, Subrace.SubRaceDb>();
             container.RegisterType<IEntityDb<ItemType>, ItemType.ItemTypeDb>();
             container.RegisterType<IEntityDb<Campaighn>, Campaighn.CampaihnDb>();
-
+            container.RegisterType<IEntityDb<CampaighnRace>, CampaighnRace.CampaighnRaceDb>();
+            container.RegisterType<IEntityDb<DictionaryAttribute>, DictionaryAttribute.DictionaryAttributeDb>();
+            container.RegisterType<IEntityDb<DictionaryAttributeType>, DictionaryAttributeType.DictionaryAttributeTypeDb>();
 
             container.RegisterType<IUserDb<User>, UserDb>();
             #endregion

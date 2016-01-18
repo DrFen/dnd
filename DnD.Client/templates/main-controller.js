@@ -38,6 +38,13 @@ app.controller('MainCtrl', function($scope, $location) {
             Id: '2.2',
             RootId: '2',
             Action: null
+        }
+        ,
+        {
+            Name: 'Атрибуты',
+            Id: '2.3',
+            RootId: '2',
+            Action: 'attributes'
         },
         {
             Name: 'Расы',

@@ -45,6 +45,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       .when("/users", { templateUrl: "partials/user-control/user-list.html", controller: "UserCtrl" })
       //Main dictionaries
       .when("/race", { templateUrl: "partials/simple-dictionary.html", controller: "RaceCtrl" })
+      .when("/attributes", { templateUrl: "partials/game-dictionary/attribute/attribute-list.html", controller: "AttributeCtrl" })
       .when("/subrace", { templateUrl: "partials/simple-dictionary.html", controller: "SubraceCtrl" })
       .when("/item-type", { templateUrl: "partials/game-dictionary/item-type-list.html", controller: "ItemTypeCtrl" })
         //campaighn

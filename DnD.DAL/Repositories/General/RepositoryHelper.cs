@@ -13,7 +13,7 @@ using NHibernate.Transform;
 
 namespace DnD.DAL.Repositories.General
 {
-    public class RepositoryHelper<T> : IEntityDb<T> where T : class, IEntity
+    public class RepositoryHelper<T> : IEntityDb<T> where T : class
     {
 
 
@@ -23,37 +23,58 @@ namespace DnD.DAL.Repositories.General
         {
             SetSession(ApplicationCore.Instance.SessionFactory.OpenSession());
         }
+
         public void SetSession(ISession session)
         {
             _session = session;
         }
 
+        public ISession GetSession()
+        {
+            return _session;
+        }
 
+        
+
+        public ITransaction StartTransaction()
+        {
+            return _session.BeginTransaction();
+        }
+
+        public void CommitTransaction(ITransaction transaction)
+        {
+            transaction.Commit();
+        }
+
+        public void RollbackTransaction(ITransaction transaction)
+        {
+            transaction.Rollback();
+        }
 
         public virtual void Upsert(T entity)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Save(entity);
-                transaction.Commit();
-            }
+            _session.Save(entity);
+
         }
 
         public void Delete(Guid id)
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                var entity = GetById(id);
-                _session.Delete(entity);
-                transaction.Commit();
-            }
+            var entity = GetById(id);
+            _session.Delete(entity);
+
+        }
+
+        public void Delete(T entity)
+        {
+           _session.Delete(entity);
+
         }
 
 
         public static Stream Register()
         {
             HbmSerializer.Default.Validate = true;
-            var a = (Assembly.GetAssembly(typeof (T)));
+            var a = (Assembly.GetAssembly(typeof(T)));
             return HbmSerializer.Default.Serialize(a);
         }
         public IQueryOver<T> GetList()
@@ -64,7 +85,7 @@ namespace DnD.DAL.Repositories.General
 
         public T GetById(Guid id)
         {
-            return _session.QueryOver<T>().List().First(f => f.Id.Equals(id));
+            return _session.QueryOver<T>().List().First(f => ((IEntity)f).Id.Equals(id));
 
         }
 

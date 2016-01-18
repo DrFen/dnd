@@ -3,15 +3,18 @@
 
 
     var listUrl = 'Campaighn/List';
-    var editUrl = 'Dictionary/RaceEdit';
-    var deletetUrl = 'Dictionary/RaceDelete';
+    var listSelectedRace = 'Campaighn/RaceList';
+    var editUrl = 'Campaighn/Edit';
+    var deletetUrl = 'Campaighn/Delete';
     var templateHtml = 'partials/campaighn/campaighn-edit.html';
 
     var columnDefs = [{ field: 'Name', displayName: 'Наименование', width: 300 },
                       { field: 'StartLevel', displayName: 'Начальный уровень' },
                       { field: 'Id', displayName: 'id', visible: false }];
 
+    /*************/
 
+    /****/
     $scope.selectedItems = [];
     $scope.filterOptions = {
         filterText: ''
@@ -43,6 +46,7 @@
 
     $scope.add = function () {
         $scope.editModel = { Id: null, Name: '', Description: '' };
+        $scope.editModel.Subraces = [];
         $scope.modalInstance = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -51,12 +55,18 @@
     };
 
     $scope.edit = function () {
+
         $scope.editModel = $scope.selectedItems[0];
-        $scope.modalInstance = $uibModal.open({
-            animation: true,
-            scope: $scope,
-            templateUrl: templateHtml
+        dataService.sendPost(listSelectedRace, $scope.selectedItems[0].Id).then(function (val) {
+            $scope.editModel.Subraces = val;
+            $scope.modalInstance = $uibModal.open({
+                animation: true,
+                scope: $scope,
+                templateUrl: templateHtml
+            });
+
         });
+        
     };
 
 

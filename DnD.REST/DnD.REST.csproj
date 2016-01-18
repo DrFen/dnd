@@ -196,6 +196,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthHandler.cs" />
+    <Compile Include="Controllers\AttributeController.cs" />
     <Compile Include="Controllers\CampaighnController.cs" />
     <Compile Include="Controllers\ComboListController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
