@@ -2,6 +2,8 @@
 using System.Web.Http;
 using DnD.Core.REST;
 using DnD.DAL.Entities.Dictonary;
+using DnD.DAL.Entities.Dictonary.Attributes;
+using DnD.DAL.Entities.Dictonary.CharacterDictionary;
 using DnD.DAL.Enum;
 using DnD.DAL.Interfaces.Operations;
 using DnD.DAL.Models;

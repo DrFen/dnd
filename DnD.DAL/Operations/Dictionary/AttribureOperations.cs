@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using DnD.Core.Enums;
 using DnD.Core.REST;
-using DnD.DAL.Entities.Dictonary;
+using DnD.DAL.Entities.Dictonary.Attributes;
 using DnD.DAL.Enum;
 using DnD.DAL.Interfaces.Operations;
+using DnD.DAL.Models.Dictionary;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
+using DnD.DAL.Operations.Helpers;
 using DnD.DAL.Repositories.General;
 
 namespace DnD.DAL.Operations.Dictionary
@@ -68,8 +70,34 @@ namespace DnD.DAL.Operations.Dictionary
                     _dictionaryAttrContext.GetList()
                         .List()
                         .Where(w => w.AttributeTypeId.Equals(attributeTypeId))
-                        .Select(s => new AttributeListModel {Id = s.Id, Name = s.Name})
-                        .OrderBy(o=>o.Name)
+                        .Select(
+                            s =>
+                                new AttributeListModel
+                                {
+                                    Id = s.Id,
+                                    Name = s.Name
+                                })
+                        .OrderBy(o => o.Name)
+                        .ToList());
+        }
+
+        public Response<List<AttributeLinkModel>> GetAttributeSelectList(Guid? attributeTypeId)
+        {
+            return
+                new Response<List<AttributeLinkModel>>(
+                    _dictionaryAttrContext.GetList()
+                        .List()
+                        .Where(w => w.AttributeTypeId.Equals(attributeTypeId))
+                        .Select(
+                            s =>
+                                new AttributeLinkModel
+                                {
+                                    Id = s.Id,
+                                    Label = s.Name,
+                                    Type = s.Type,
+                                    Value = MultipleOperationsHelper.ConvertToType(s.Type, "")
+                                })
+                        .OrderBy(o => o.Label)
                         .ToList());
         }
 
@@ -112,6 +140,18 @@ namespace DnD.DAL.Operations.Dictionary
 
             return new Response<bool>();
         }
+
+        public Response<AttributeLinkModel> GetAttributeLinkModel(Guid attributeId)
+        {
+            var attr = _dictionaryAttrContext.GetById(attributeId);
+            return new Response<AttributeLinkModel>(new AttributeLinkModel
+            {
+                Id = attributeId,
+                Type = attr.Type,
+                Value = MultipleOperationsHelper.ConvertToType(attr.Type, "")
+            });
+        }
+
     }
 
 }

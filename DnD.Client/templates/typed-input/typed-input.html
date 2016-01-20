@@ -1,0 +1,29 @@
+﻿<div ng-switch on="inputValue.Type" class="attribute-edit">
+    <label ng-if="inputValue.Label && inputValue.Type!='bool'" class="attribute-edit-label">{{inputValue.Label}}:</label>
+    <div ng-switch-when="number" class="attribute-edit">
+        <input type="number" ng-model="inputValue.Value" class="attribute-edit-value" />
+    </div>
+    <div ng-switch-when="text" class="attribute-edit">
+        <input type="text" ng-model="inputValue.Value" class="attribute-edit-value"/>
+    </div>
+    <div ng-switch-when="textarea" class="attribute-edit">
+        <textarea type="text" ng-model="inputValue.Value" class="attribute-edit-value"/>
+    </div>
+    <div ng-switch-when="bool" class="attribute-edit">
+        <input type="checkbox" ng-model="inputValue.Value" ng-value="inputValue.Value" class="attribute-edit-value"> {{inputValue.Label}}</input>
+    </div>
+    <div ng-switch-when="combo" class="attribute-edit">
+        <select ui-select2="{allowClear:true}" ng-model="inputValue.Value" class="attribute-edit-value">
+            <option ng-repeat="val in inputValue.ListValues" value="{{val.Id}}">{{val.Name}}</option>
+        </select>
+    </div>
+    <div ng-switch-when="multiselect" class="attribute-edit">
+        <div ng-repeat="val in inputValue.ListValues">
+            <input type="checkbox" ng-checked="inputValue.Value.indexOf(val.Id)!=-1" ng-click="changeMultiselect(val.Id)" ng-disabled="inputValue.Value.indexOf(val.Id)==-1 && inputValue.Value.length==inputValue.AllowSelectCount" class="attribute-edit-value"> {{val.Name}}</input>
+        </div>
+    </div>
+    <div ng-switch-default class="attribute-edit">
+        Что-то пошло не так. {{inputValue.Type}}
+    </div>
+
+</div>

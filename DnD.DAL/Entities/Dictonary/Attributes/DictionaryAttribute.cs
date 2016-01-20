@@ -3,7 +3,7 @@ using DnD.DAL.Interfaces;
 using DnD.DAL.Repositories.General;
 using NHibernate.Mapping.Attributes;
 
-namespace DnD.DAL.Entities.Dictonary 
+namespace DnD.DAL.Entities.Dictonary.Attributes 
 {
     [Class(Table = "t_attribute", Schema = "attributes")]
     public class DictionaryAttribute : IEntity
@@ -23,6 +23,9 @@ namespace DnD.DAL.Entities.Dictonary
 
         [Property(Column = "aggregate_function", Type = "String")]
         public virtual string AttributeFunction { get; set; }
+
+        [Property(Column = "data_type", Type = "String")]
+        public virtual string Type { get; set; }
 
         public class DictionaryAttributeDb: RepositoryHelper<DictionaryAttribute>
         {

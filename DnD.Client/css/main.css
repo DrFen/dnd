@@ -298,3 +298,40 @@ footer {
     width: 79%;
     float: right;
 }
+
+/*attribute-selector*/
+.attribute-group{
+    border-width: 1px;
+    border-style: dotted;
+    background-color: rgb(243,243,243);
+    margin: 2px;
+}
+
+.attribute-label{
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.a-delete{
+	color: red;
+	font-weight: bolder;
+	cursor: pointer;
+	margin-left :5px;
+}
+
+.container {
+    width: 100%
+}
+
+/*typed input*/
+.attribute-edit >* {
+    display: inline-block;
+    padding: 5px;
+}
+.attribute-edit-value {
+    width: 200px;   
+}
+.attribute-edit-label {
+    width: 150px;   
+}
+

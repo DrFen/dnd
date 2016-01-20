@@ -53,10 +53,10 @@ namespace DnD.DAL.Repositories.General
 
         public virtual void Upsert(T entity)
         {
-            _session.Save(entity);
+            _session.Merge(entity);//Save(entity);
 
         }
-
+    
         public void Delete(Guid id)
         {
             var entity = GetById(id);

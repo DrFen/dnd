@@ -3,7 +3,7 @@ using DnD.DAL.Interfaces;
 using DnD.DAL.Repositories.General;
 using NHibernate.Mapping.Attributes;
 
-namespace DnD.DAL.Entities.Dictonary
+namespace DnD.DAL.Entities.Dictonary.Attributes
 {
     [Class(Table = "t_attribute_type", Schema = "attributes")]
     public class DictionaryAttributeType : IComboValue

@@ -1,0 +1,17 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">Выбрать</h3>
+</div>
+<div class="modal-body">
+    <div class="grid-tree-container">
+        <div class="tree-border">
+            <tree-helper tree-api='Attribute/TypeList' selected-item="treeData.selectedTreeNode"></tree-helper>
+        </div>
+        <div id="grid-container">
+            <div class="gridStyle" ng-grid="gridOptions"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="applySelect()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="closeSelect()">Cancel</button>
+</div>

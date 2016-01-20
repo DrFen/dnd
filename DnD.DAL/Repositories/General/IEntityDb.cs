@@ -7,7 +7,9 @@ namespace DnD.DAL.Repositories.General
     {
         IQueryOver<T> GetList();
         T GetById(Guid id);
+
         void Upsert(T entity);
+
         void Delete(Guid id);
         void Delete(T entity);
         ITransaction StartTransaction();

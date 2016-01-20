@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <div class="buttonBlock">
+        <label>Постоянные аттрибуты</label>
+        <input style="margin-right: 20px" type="checkbox" ng-model="infinityDimension" />
+
+        <label ng-if="!infinityDimension">Количество к выборке в группе</label>
+        <input style="margin-right: 20px" type="number" ng-model="dimensionCount" ng-if="!infinityDimension" />
+
+        <button type="button" ng-click="addGroup()" class="btn btn-primary">Добавить раздел</button>
+    </div>
+    <div ng-repeat="attrGroup in attributeList" class="attribute-group">
+        <label ng-if="attrGroup.Count===null">Постоянные аттрибуты:</label>
+        <label ng-if="attrGroup.Count!=null">Необходимо выбрать {{attrGroup.Count}} из:</label>
+        <a ng-click="removeGroup(attrGroup.JsId)" class="a-delete">X</a>
+        <div>
+            <button type="button" ng-click="addAttr(attrGroup.JsId)" class="btn btn-primary">Добавить атрибут</button>
+        </div>
+
+        <div ng-repeat="attr in attrGroup.Attributes">
+            <!--<label class="attribute-label">{{attr.Name}}</label>
+            <input style="margin-left: 20px" ng-model="attr.Value" />-->
+            <typed-input input-value="attr" class="attribute-edit"></typed-input>
+            <a ng-click="removeAttr(attrGroup.JsId, attr.Id)" class="a-delete">X</a>
+        </div>
+    </div>
+</div>
+

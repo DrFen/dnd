@@ -4,11 +4,13 @@ using System.Linq;
 using DnD.Core.Enums;
 using DnD.Core.REST;
 using DnD.DAL.Entities.Dictonary;
+using DnD.DAL.Entities.Dictonary.CharacterDictionary;
 using DnD.DAL.Interfaces;
 using DnD.DAL.Interfaces.Operations;
 using DnD.DAL.Models;
 using DnD.DAL.Models.Dictionary.Edit;
 using DnD.DAL.Models.Dictionary.List;
+using DnD.DAL.Operations.Helpers;
 using DnD.DAL.Repositories.General;
 
 namespace DnD.DAL.Operations.Dictionary
@@ -16,26 +18,33 @@ namespace DnD.DAL.Operations.Dictionary
     public class DictionaryOperations : IDictionaryOperations
     {
         private readonly IEntityDb<Race> _raceContext;
+        private readonly IEntityDb<RaceAttribute> _raceAttributeContext;
+
         private readonly IEntityDb<Subrace> _subraceContext;
         private readonly IEntityDb<ItemType> _itemTypeContext;
 
         public DictionaryOperations(IEntityDb<Race> raceContext,
                                     IEntityDb<Subrace> subraceContext,
-                                    IEntityDb<ItemType> itemTypeContext)
+                                    IEntityDb<ItemType> itemTypeContext,
+                                    IEntityDb<RaceAttribute> raceAttributeContext)
         {
             _raceContext = raceContext;
             _subraceContext = subraceContext;
             _itemTypeContext = itemTypeContext;
+            _raceAttributeContext = raceAttributeContext;
 
             _subraceContext.SetSession(_raceContext.GetSession());
             _itemTypeContext.SetSession(_raceContext.GetSession());
+            _raceAttributeContext.SetSession(_raceContext.GetSession());
         }
 
         public Response<bool> DeleteEntity<T>(Guid id, IEntityDb<T> context) where T : class, IEntity
         {
             try
             {
+                var transaction = context.StartTransaction();
                 context.Delete(id);
+                transaction.Commit();
             }
             catch (Exception)
             {
@@ -59,15 +68,34 @@ namespace DnD.DAL.Operations.Dictionary
             };
         }
 
-        public Response<bool> UpdateRace(RaceListModel updateModel)
+        public Response<bool> UpdateRace(RaceEditModel updateModel)
         {
-
-            var currentEntity = updateModel.Id == null ? new Race() : _raceContext.GetById((Guid)updateModel.Id);
+            var transaction = _raceContext.StartTransaction();
+            var id = updateModel.Id ?? Guid.NewGuid();
+            var currentEntity = updateModel.Id == null
+                ? new Race { Id = id }
+                : _raceContext.GetById((Guid)updateModel.Id);
 
             currentEntity.Name = updateModel.Name;
             currentEntity.Description = updateModel.Description ?? "";
             _raceContext.Upsert(currentEntity);
+
+            updateModel.Attributes.SaveAttributes(id, _raceAttributeContext);
+
+            transaction.Commit();
             return new Response<bool>(true);
+        }
+
+        public Response<RaceEditModel> GetRaceDetail(Guid id)
+        {
+            var race = _raceContext.GetById(id);
+            return new Response<RaceEditModel>(new RaceEditModel
+            {
+                Id = id,
+                Name = race.Name,
+                Description = race.Description,
+                Attributes = _raceAttributeContext.GetAttributes(id)
+            });
         }
 
         public Response<bool> DeleteRace(Guid id)
@@ -137,7 +165,7 @@ namespace DnD.DAL.Operations.Dictionary
 
             return new Response<List<ItemTypeListModel>>
             {
-                ErrorCode = (int) ErrorEnum.Ok,
+                ErrorCode = (int)ErrorEnum.Ok,
                 ErrorMessage = "",
                 Value = originalList.Where(w => w.RootId.Equals(null)).Select(s => new ItemTypeListModel
                 {
@@ -174,7 +202,7 @@ namespace DnD.DAL.Operations.Dictionary
 
             var currentEntity = updateModel.Id == null
                 ? new ItemType()
-                : _itemTypeContext.GetById((Guid) updateModel.Id);
+                : _itemTypeContext.GetById((Guid)updateModel.Id);
 
             currentEntity.Name = updateModel.Name;
             currentEntity.Description = updateModel.Description ?? "";

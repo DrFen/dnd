@@ -28,9 +28,17 @@ namespace DnD.REST.Controllers
             return _dictionaryOperations.GetRaceList();
         }
 
+        [Route("RaceDetail")]
+        [HttpPost]
+        public Response<RaceEditModel> RaceDetail(Request<Guid> req)
+        {
+
+            return _dictionaryOperations.GetRaceDetail(req.Value);
+        }
+
         [Route("RaceEdit")]
         [HttpPost]
-        public Response<bool> RaceEdit(Request<RaceListModel> req)
+        public Response<bool> RaceEdit(Request<RaceEditModel> req)
         {
 
             return _dictionaryOperations.UpdateRace(req.Value);

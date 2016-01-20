@@ -18,7 +18,7 @@
         data: 'gridData',
         columnDefs: columnDefs,
         selectedItems: $scope.selectedItems,
-        enableCellEdit: true,
+        enableCellEdit: false,
         multiSelect: false
     };
 

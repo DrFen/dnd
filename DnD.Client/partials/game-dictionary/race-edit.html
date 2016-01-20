@@ -15,8 +15,7 @@
             </div>
         </uib-tab>
         <uib-tab heading="Бонусы">
-            <button class="btn btn-primary" type="button" ng-click="selectBonus()">Добавить бонус</button>
-            <span>{{Bonuses.selectedBonus[0]}}</span>
+            <attribute-selector attribute-list="editModel.Attributes"></attribute-selector>
         </uib-tab>
 </uib-tabset>
 </div>

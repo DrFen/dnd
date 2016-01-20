@@ -98,17 +98,21 @@
   <ItemGroup>
     <Compile Include="Entities\Campaighn\Campaighn.cs" />
     <Compile Include="Entities\Campaighn\CampaighnRace.cs" />
-    <Compile Include="Entities\Dictonary\DictionaryAttribute.cs" />
-    <Compile Include="Entities\Dictonary\DictionaryAttributeType.cs" />
+    <Compile Include="Entities\Dictonary\Attributes\AttributeGroup.cs" />
+    <Compile Include="Entities\Dictonary\Attributes\AttributeGroupData.cs" />
+    <Compile Include="Entities\Dictonary\Attributes\DictionaryAttribute.cs" />
+    <Compile Include="Entities\Dictonary\Attributes\DictionaryAttributeType.cs" />
+    <Compile Include="Entities\Dictonary\CharacterDictionary\Race.cs" />
+    <Compile Include="Entities\Dictonary\CharacterDictionary\RaceAttribute.cs" />
+    <Compile Include="Entities\Dictonary\CharacterDictionary\SubRace.cs" />
     <Compile Include="Entities\Dictonary\ItemType.cs" />
-    <Compile Include="Entities\Dictonary\Race.cs" />
-    <Compile Include="Entities\Dictonary\SubRace.cs" />
     <Compile Include="Entities\Users\LoginUser.cs" />
     <Compile Include="Entities\Users\Session.cs" />
     <Compile Include="Enum\AttributeFunction.cs" />
     <Compile Include="Enum\VisionType.cs" />
     <Compile Include="Extensions\Attribute\EnumNameAttribute.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Interfaces\Data\IAttributeableEntity.cs" />
     <Compile Include="Interfaces\IComboValue.cs" />
     <Compile Include="Interfaces\Operations\IAttributeOperations.cs" />
     <Compile Include="Interfaces\Operations\ICampaighnOperations.cs" />
@@ -117,8 +121,10 @@
     <Compile Include="Models\Campaighn\CampaighnEditModel.cs" />
     <Compile Include="Models\Campaighn\CampaighnListAnswer.cs" />
     <Compile Include="Models\ComboListModel.cs" />
+    <Compile Include="Models\Dictionary\AttributeLinkListModel.cs" />
     <Compile Include="Models\Dictionary\Edit\AttributeEditModel.cs" />
     <Compile Include="Models\Dictionary\Edit\ItemTypeEditModel.cs" />
+    <Compile Include="Models\Dictionary\Edit\RaceEditModel.cs" />
     <Compile Include="Models\Dictionary\List\AttributeListModel.cs" />
     <Compile Include="Models\Dictionary\List\AttributeTypeListModel.cs" />
     <Compile Include="Models\Dictionary\List\ItemTypeListModel.cs" />
@@ -129,6 +135,7 @@
     <Compile Include="Operations\Camaighn\CampaighnOperations.cs" />
     <Compile Include="Operations\Dictionary\AttribureOperations.cs" />
     <Compile Include="Operations\Helpers\ComboValuesGetter.cs" />
+    <Compile Include="Operations\Helpers\MultipleOperationsHelper.cs" />
     <Compile Include="Repositories\UserAccess\IUserDb.cs" />
     <Compile Include="Models\UserAccess\LoginUserModel.cs" />
     <Compile Include="Models\UserAccess\List\UserListModel.cs" />

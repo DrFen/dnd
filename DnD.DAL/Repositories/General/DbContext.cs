@@ -1,5 +1,6 @@
 ﻿
 using DnD.DAL.Entities.Dictonary;
+using DnD.DAL.Entities.Dictonary.CharacterDictionary;
 using DnD.DAL.Entities.Users;
 using NHibernate.Cfg;
 

@@ -11,8 +11,9 @@ namespace DnD.DAL.Interfaces.Operations
     {
         #region race
         Response<List<RaceListModel>> GetRaceList();
-        Response<bool> UpdateRace(RaceListModel updateModel);
+        Response<bool> UpdateRace(RaceEditModel updateModel);
         Response<bool> DeleteRace(Guid id);
+        Response<RaceEditModel> GetRaceDetail(Guid id);
         #endregion
 
         #region subrace
