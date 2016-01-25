@@ -20,6 +20,12 @@ app.controller('MainCtrl', function($scope, $location) {
              RootId: null,
              Action: null
          },
+         {
+             Name: 'test',
+             Id: '4',
+             RootId: null,
+             Action: 'about'
+         },
         {
             Name: 'Пользователи',
             Id: '1.1',

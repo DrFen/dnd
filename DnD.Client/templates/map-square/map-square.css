@@ -1,0 +1,80 @@
+.container{
+    min-width: 1170px;
+    width: 90%;
+    padding:0px;
+    margin-left:10px;
+}
+    
+#map-border{
+	margin: 10px;
+	float: left;
+}
+.map-square{
+    border-style: solid;
+    border-color: black;
+    border-left-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    display: inline-block;
+    position: relative;
+}
+
+.selected-sprite{
+	border-width : 2px;
+	border-color : red;
+}
+
+.map-object{
+    border-left-width: 0px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    position: relative;
+}
+.map-last-in-row-square{
+	border-right-width: 1px;
+}
+.map-last-row-square{
+	border-bottom-width: 1px;
+}
+.map-row{
+	margin-right: 0px;
+}
+
+#map-scroll-y{
+    width: 14px;
+    display: inline-block;
+    float: right;
+    background-color: rgb(240,240,240);
+    margin-left: 7px;
+    border-width: 1px;
+    border-color: black;
+    border-style: outset;
+    border-radius: 3px;
+}
+
+#map-scroll-x{
+    height: 14px;
+    background-color: rgb(240,240,240);
+    margin-top: 7px;
+    border-width: 1px;
+    border-color: black;
+    border-style: outset;
+    border-radius: 3px;
+}
+.ui-slider-horizontal > .ui-slider-handle{
+	margin-top : 3px;
+}
+.ui-slider-vertical > .ui-slider-handle{
+	margin-left : 3px;
+}
+
+#map-scroller-y{
+    width: 6px;
+    margin-left: 3px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 3px;
+}
+

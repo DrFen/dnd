@@ -1,14 +1,15 @@
 ﻿<div class="container" ng-controller="PageStaticCtrl">
 
-    <div class="row">
+    <button ng-click="refill()">refill</button>
+    <!-- <div ng-repeat="inputElem in inputArray">
 
-        <div class="col-lg-12">
-            <span class="page-header">
-                About
-                <small>It's Nice to Meet You!</small>
-            </span>
-        </div>
+     <typed-input input-value="inputElem"> </<typed-input>
+     </div>-->
+    <!--<attribute-selector attribute-list="attributeList"></attribute-selector>!-->
+    <map-square squares="squareArray"></map-square>
+    <button ng-click="deleteAllObjects()">delete all objects</button>
+    <button ng-click="moveAllObject()">move all objects</button>
 
-    </div>
+
 
 </div>

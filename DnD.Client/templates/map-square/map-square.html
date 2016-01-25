@@ -1,0 +1,22 @@
+<div class="container">
+	<div id="map-border">
+		<div style="display: inline-block;">
+			<div ng-repeat="row in renderView" class="map-row" ng-style="{'height':'{{viewParams.SpriteSize}}px'}" >				
+				<div  ng-repeat="sprite in row" ng-click="selectObject(sprite)"  ng-style="getSpriteStyle(sprite)" class="map-square" ng-class="{'map-last-in-row-square': $index+1==row.length, 'map-last-row-square': $parent.$index+1==renderView.length, 'selected-sprite': sprite.X == selectedX && sprite.Y == selectedY}">
+					<div class="map-object"  ng-style="getObjectStyle(placementObject, $index)" ng-repeat="placementObject in sprite.PlacementObjects">
+					</div>
+				</div>			
+			</div>			
+		</div>
+		<div id="map-scroll-y" ui-slider="sliderY.options" ng-model="viewParams.StartWithY" ng-style="{'height':'{{viewParams.SpriteSize * viewParams.YCount}}px'}"></div>
+		<div id="map-scroll-x" ui-slider="sliderX.options" ng-model="viewParams.StartWithX" ng-style="{'width':'{{viewParams.SpriteSize * viewParams.XCount}}px'}"></div>
+		
+		<button ng-click="ChangeY(-1)">&#8593</button>
+		<button ng-click="ChangeY(1)">&#8595</button>
+		<button ng-click="ChangeX(-1)">&#8592</button>
+		<button ng-click="ChangeX(1)">&#8594</button>
+
+	</div>	
+	
+	
+</div>	
