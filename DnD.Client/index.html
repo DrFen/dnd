@@ -30,6 +30,7 @@
     <!--STYLESHEET-->
     <link href="css/main.css" rel="stylesheet" />
     <link href="templates/map-square/map-square.css" rel="stylesheet"/>
+	<link href="partials/map/map-edit.css" rel="stylesheet"/>
 
     <!--CONTROLLERS-->
     <script src="scripts/app.js"></script>
@@ -51,15 +52,16 @@
     <script src="scripts/game-dictionary/subrace.js"></script>
     <script src="scripts/game-dictionary/item-type.js"></script>
     <script src="scripts/game-dictionary/attribute.js"></script>
+	<script src="scripts/map/map-edit.js"></script>
 
     <!--CAMPAIGHN CONTROLLERS-->
     <script src="scripts/campaighn/campaighn.js"></script>
 </head>
 <body ng-app="dndapp">
 
-    <div ng-include='"templates/header.html"'></div>
-    <div ng-view></div>
-    <div ng-include='"templates/footer.html"'></div>
+    <div   ng-include='"templates/header.html"'></div>	
+    <div id="main-content"  ng-view></div>
+    <div style="display:none" ng-include='"templates/footer.html"'></div>
 
     <!--Модальное окно для ошибок-->
     <script type="text/ng-template" id="message.html" ng-controller="MessageCtrl">

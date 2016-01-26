@@ -26,6 +26,12 @@ app.controller('MainCtrl', function($scope, $location) {
              RootId: null,
              Action: 'about'
          },
+		 {
+             Name: 'test-create-map',
+             Id: '5',
+             RootId: null,
+             Action: 'map-edit/123/456'
+         },
         {
             Name: 'Пользователи',
             Id: '1.1',
