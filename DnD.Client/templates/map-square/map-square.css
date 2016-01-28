@@ -1,14 +1,12 @@
-.container{
-    min-width: 1170px;
-    width: 90%;
-    padding:0px;
-    margin-left:10px;
-}
     
 #map-border{
 	margin: 10px;
 	float: left;
+	width: 100%;
+	height:100%;
 }
+
+
 .map-square{
     border-style: solid;
     border-color: black;
@@ -19,6 +17,7 @@
     display: inline-block;
     position: relative;
     background-size: contain;
+    height:100%;
 }
 
 .selected-sprite{
@@ -33,6 +32,18 @@
     border-bottom-width: 0px;
     position: relative;
     background-size: contain;
+
+    height: 90%;
+  /*  height: -webkit-calc(100% - 2px);
+    height: -moz-calc(100% - 2px);
+    height: calc(100% - 2px);*/
+    
+    width: 90%;
+   /* width: -webkit-calc(100% - 2px);
+    width: -moz-calc(100% - 2px);
+    width: calc(100% - 2px);   */ 
+	
+    margin : 5%;
 }
 .map-last-in-row-square{
 	border-right-width: 1px;
@@ -41,15 +52,30 @@
 	border-bottom-width: 1px;
 }
 .map-row{
-	margin-right: 0px;
+	margin-right: 0px;	
+}
+#map-slider-group{
+	display: block;  
+	float:left;
+	
+	height: 100%;
+	height: -webkit-calc(100% - 28px);
+	height: -moz-calc(100% - 28px);
+	height: calc(98% - 28px);
+	
+	width: 100%;
+	width: -webkit-calc(100% - 28px);
+	width: -moz-calc(100% - 28px);
+	width: calc(100% - 28px);
 }
 
 #map-scroll-y{
     width: 14px;
-    display: inline-block;
+    /*height:100%;*/
+    display: block;
     float: right;
     background-color: rgb(240,240,240);
-    margin-left: 7px;
+    margin-right: 14px;
     border-width: 1px;
     border-color: black;
     border-style: outset;
@@ -58,6 +84,7 @@
 
 #map-scroll-x{
     height: 14px;
+    width:100%;
     background-color: rgb(240,240,240);
     margin-top: 7px;
     border-width: 1px;

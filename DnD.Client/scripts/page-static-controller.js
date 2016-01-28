@@ -15,9 +15,9 @@
 
     $scope.refill = function () {
         $scope.squareArray = [];
-        for (var y = 0; y < 20; y++) {
+        for (var y = 0; y < 200; y++) {
             var row = [];
-            for (var x = 0; x < 20; x++) {
+            for (var x = 0; x < 200; x++) {
                 var placementObjects = [];
                 if (Math.floor(Math.random() * 10) % 2 == 0) {
                     placementObjects.push({

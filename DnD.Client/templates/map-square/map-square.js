@@ -1,14 +1,12 @@
-app.directive('mapSquare', function (dataService, $rootScope) {
+app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
     return {
 			templateUrl: '/templates/map-square/map-square.html',
 			scope: {
 				squares: "=squares"           
 			},
         controller: function ($scope) {
-			
 			$scope.viewParams = {
-				SpriteSize : 30,
-				XCount : 10,
+				XCount : 25,
 				YCount: 10,
 				StartWithX: 0,
 				StartWithY: 0
@@ -41,30 +39,41 @@ app.directive('mapSquare', function (dataService, $rootScope) {
 					}
 				};	
 			
-			$scope.afterNextSelect = function(x,y){};
 			
         },
         link: function (scope, element, attrs) {		
 
+		
+			scope.getSpriteParams = function(dimension){
+				var height = document.getElementById("map-border").offsetHeight;
+				var width = document.getElementById("map-border").offsetWidth ;
+				
+				var size =Math.min(height/scope.viewParams.YCount , width/scope.viewParams.XCount);
+				
+				if (dimension === 'w')
+					return size / width * 100;
+										
+				return size / height * 100
+			}
+			
+			scope.getWidth = function(){
+			}
+
 			scope.getSpriteStyle = function(sprite){
 				return {
 					"background-image":'url('+sprite.Background + ')',
-					height : scope.viewParams.SpriteSize + 'px',
-					width : scope.viewParams.SpriteSize + 'px',
+					width : scope.getSpriteParams('w') + '%'
 					
 				};
 			};
 			scope.getObjectStyle = function(sprite, index){
 				return {
 					"background-image":'url('+sprite.Image + ')',
-					"z-index": index,					
-					height : scope.viewParams.SpriteSize - 6 + 'px',
-					width : scope.viewParams.SpriteSize - 6 + 'px',
-					margin: '2px'
 				};
 			};
 				
 			scope.render = function(){
+				console.log('render start');
 				scope.renderView = [];	
 
 				for(var y = 0; y < scope.viewParams.YCount; y++){
@@ -77,40 +86,22 @@ app.directive('mapSquare', function (dataService, $rootScope) {
 							addedElem.viewY = y;
 							scope.renderView[y].push(addedElem);
 						};					
-				}			
+				}
+				console.log('render stop');				
 			};	
 			
 			scope.selectObject = function(sprite){
 				scope.selectedX = sprite.X;
 				scope.selectedY = sprite.Y;
 				console.log('X=' + sprite.X +' Y=' + sprite.Y + ' viewX =' + sprite.viewX  +' viewY =' + sprite.viewY);
-				scope.afterNextSelect(sprite.X, sprite.Y);
-				scope.afterNextSelect = function(x,y){};
 			}
 			
-			/*Interface*/	
-			scope.$on('deleteObjects',function(event, data){
-				if(scope.selectedX ===undefined || scope.selectedY===undefined)
-					return;
-				scope.squares[scope.selectedY][scope.selectedX].PlacementObjects = [];
-            });	
-			
-			scope.$on('moveObjects',function(event, data){
-				if(scope.selectedX ===undefined || scope.selectedY===undefined)
-					return;
-				
-				scope.nextSelectionArgs = {	
-					X: scope.selectedX,
-					Y: scope.selectedY
-				};
-				scope.afterNextSelect = function(x, y){
-					scope.squares[y][x].PlacementObjects = scope.squares[scope.nextSelectionArgs.Y][scope.nextSelectionArgs.X].PlacementObjects;
-					scope.squares[scope.nextSelectionArgs.Y][scope.nextSelectionArgs.X].PlacementObjects = [];
-					scope.nextSelectionArgs = {};
-				};
-            });
-			
+						
 			scope.render();
+			
+			/*window.onresize = function(event) {
+				scope.$apply();
+			};*/
         }
     }
 });
