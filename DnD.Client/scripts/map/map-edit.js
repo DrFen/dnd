@@ -4,9 +4,9 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 	
 	$scope.refill = function () {
         $scope.squareArray = [];
-        for (var y = 0; y < 200; y++) {
+        for (var y = 0; y < 30; y++) {
             var row = [];
-            for (var x = 0; x < 200; x++) {
+            for (var x = 0; x < 30; x++) {
                 var placementObjects = [];
                 if (Math.floor(Math.random() * 10) % 2 == 0) {
                     placementObjects.push({

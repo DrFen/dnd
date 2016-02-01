@@ -1,14 +1,5 @@
 <div id="map-border" style="display: inline-block; width:95%; height:95%;">
-	<div id="map-slider-group">
-		<div ng-repeat="row in renderView" class="map-row" ng-style="{'height':'{{getSpriteParams('h')}}%'}" >				
-			<div  ng-repeat="sprite in row" ng-click="selectObject(sprite)"  ng-style="getSpriteStyle(sprite)" class="map-square" ng-class="{'map-last-in-row-square': $index+1==row.length, 'map-last-row-square': $parent.$index+1==renderView.length, 'selected-sprite': sprite.X == selectedX && sprite.Y == selectedY}">
-				<div class="map-object"  ng-style="getObjectStyle(placementObject, $index)" ng-repeat="placementObject in sprite.PlacementObjects">
-				</div>		
-			</div>	
-		</div>			
-	</div>
-	
-	<div id="map-scroll-y" ui-slider="sliderY.options" ng-model="viewParams.StartWithY" style="height:{{getSpriteParams('h') * viewParams.YCount }}%"></div>
-	<!--<div id="map-scroll-x" ui-slider="sliderX.options" ng-model="viewParams.StartWithX" ng-style="{'width':'{{getSpriteParams('w')* viewParams.XCount}}%'}"></div>
-	-->
+	<canvas id="map-canvas">
+	</canvas>
+
 </div>	
