@@ -1,10 +1,25 @@
-    
+.map-canvas{
+  margin-top: 2%;
+  margin-left: 2%;
+  float: left;
+  width: 95%;
+  height:95%;
+  position: absolute;
+}  
+.no-pointer{
+   cursor: none;
+}
+
 #map-canvas{
-	margin-top: 2%;
-	margin-left: 2%;
-	float: left;
-	width: 95%;
-	height:95%;
+  z-index:0;
+}
+
+#map-canvas-selection{
+   z-index:1000;
+}
+
+#map-canvas-grid{
+   z-index:900;
 }
 
 

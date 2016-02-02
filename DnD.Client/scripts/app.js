@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngSanitize', 'ui.tree', 'ui.select2', 'ui.slider']);
+var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngSanitize'/*, 'ui.tree', 'ui.select2', 'ui.slider'*/]);
 
 app.setCookie = function (name, value, options) {
     options = options || {};
