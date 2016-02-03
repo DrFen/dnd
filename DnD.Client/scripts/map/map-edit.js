@@ -1,11 +1,20 @@
 app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routeParams, $uibModal, dataService) {
 	$scope.Id = $routeParams.Id;
 	$scope.CampaighnId = $routeParams.CampaighnId;
+	
+	$scope.viewParams = {
+				CellSize: 30,
+				XCount : 0,
+				YCount: 0,			
+				StartWithX: 500,
+				StartWithY: 500
+			};	
+			
 	$scope.addItem = {
 				Width: 2,
 				Height: 2,
 				AuraColor : "rgba(255, 255, 0, 0.5)",
-				Layer: 'Background',
+				Layer: 'Person',
 				Image: 'sprites/item.jpg'
 			};
 			
@@ -25,15 +34,15 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 			
 	$scope.refill = function () {
         $scope.squareArray = {
-			XCount: 10,
-			YCount: 10,
+			XCount: 1000,
+			YCount: 1000,
 			Layers: ['Person'],
 			BackgroundLayer:[],
 			PersonLayer:[]
 		};
-        for (var y = 0; y < 10; y++) {
+        for (var y = 0; y < $scope.squareArray.YCount; y++) {
             var row = [];
-            for (var x = 0; x < 10; x++) {
+            for (var x = 0; x < $scope.squareArray.XCount; x++) {
                 if (Math.floor(Math.random() * 10) % 2 == 0) {
                     $scope.squareArray.BackgroundLayer.push({ Id: y * 100000 + x, Image: 'sprites/exampe_terraine3.jpg', XFrom: x, YFrom:y, Width :1, Height:1});
                 }
@@ -42,7 +51,7 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
                 }
             }
         }
-		$scope.squareArray.PersonLayer.push({ Id: y * 99900000 , Image: 'sprites/person.jpg', XFrom: 5, YFrom:5, Width :1, Height:1});
+		$scope.squareArray.PersonLayer.push({ Id: y * 99900000 , Image: 'sprites/person.jpg', XFrom: 510, YFrom:505, Width :1, Height:1});
     };
 	
 	$scope.moveRight = function(){
@@ -50,6 +59,11 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 		$scope.$broadcast('render');
 	}
 
+	$scope.scroll = function(offsetX, offsetY){
+		$scope.viewParams.StartWithX +=offsetX;
+		$scope.viewParams.StartWithY +=offsetY;
+	}
+	
     $scope.refill();
 	//$scope.newRefill();
 });

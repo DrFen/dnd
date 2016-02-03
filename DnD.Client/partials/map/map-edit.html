@@ -1,12 +1,16 @@
 <!--<link href="map-edit.css" rel="stylesheet"/>-->
 <div class="content-container">	
 		<div id = "map-view">
-			<map-square cells="squareArray" add-item="addItem"></map-square>
+			<map-square cells="squareArray" add-item="addItem" view-params="viewParams"></map-square>
 			<!--<div style="background-color: bisque; width:100%; height:100%;"></div>-->
 		</div>
 		<div id="map-controls">
 		</div>
 		<div id="map-actions">
-			<button style="height: 100%; width: 5%;" ng-click="moveRight()">Двинуть</button>
+			<button style="height: 100%; width: 10%;" ng-click="moveRight()">Двинуть</button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(1,0)">Скрольнуть + </button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(-1,0)" on-change="test">Скрольнуть - </button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(0,-1)">Вверх </button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(0,1)">Вниз </button>
 		</div>		
 </div>

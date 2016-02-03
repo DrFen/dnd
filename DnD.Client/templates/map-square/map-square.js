@@ -2,30 +2,26 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
     return {
 			templateUrl: '/templates/map-square/map-square.html',
 			scope: {
+				viewParams: "=viewParams",
 				cells: "=cells",
 				addItem: "=addItem"
 			},
-        controller: function ($scope) {
-			$scope.viewParams = {
-				CellSize: 30,
-				XCount : 0,
-				YCount: 0,			
-				StartWithX: 1,
-				StartWithY: 1
-			};		
-			$scope.hideCursor = false;
-			
-			$scope.$on('render', function() {$scope.render(); });
-			
-			
+        controller: function ($scope) {				
+		
         },
         link: function (scope, element, attrs) {		
 			
+			
+			
 			scope.init = function(){
+			
+				
+				
 				scope.canvas = document.getElementById("map-canvas");
 				scope.canvasBackgroundContext = scope.canvas.getContext("2d");
 				scope.canvas.height = scope.canvas.offsetHeight;
 				scope.canvas.width = scope.canvas.offsetWidth;
+
 
 				scope.canvasSelection = document.getElementById("map-canvas-selection");
 				scope.canvasSelectionContext = scope.canvasSelection.getContext("2d");	
@@ -60,18 +56,27 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				scope.offset = 0.5;
 			
 				
-				scope.viewParams.XCount = Math.min(((scope.canvas.offsetWidth )/ scope.viewParams.CellSize | 0), scope.cells.XCount);
-				scope.viewParams.YCount = Math.min(((scope.canvas.offsetHeight) / scope.viewParams.CellSize | 0), scope.cells.YCount);
+				
 				
 				scope.canvasSelection.onclick = function(event){
 					scope.selectCell(event);
 				};
 				
 				scope.canvasSelection.onmousemove  = function(event){
-					scope.renderSelection(event);
+					if(scope.addItem)
+						scope.renderSelection(event);
 				};
 				
+				scope.$watch('viewParams', function(){
+					scope.viewParams.StartWithX  = Math.max(scope.viewParams.StartWithX, 0);
+					scope.viewParams.StartWithY  = Math.max(scope.viewParams.StartWithY, 0);
+					
+					scope.viewParams.XCount = Math.min(((scope.canvas.offsetWidth )/ scope.viewParams.CellSize | 0), scope.cells.XCount);
+					scope.viewParams.YCount = Math.min(((scope.canvas.offsetHeight) / scope.viewParams.CellSize | 0), scope.cells.YCount);
+					
+					scope.render();
 				
+				}, true);
 				console.log('init complete. XCount = ' + scope.viewParams.XCount + '; YCount = ' + scope.viewParams.YCount + ';');
 
 				
@@ -136,12 +141,12 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				
 				for(y=0; y <= scope.viewParams.CellSize * yCount; y+= scope.viewParams.CellSize){
 					scope.canvasGridContext.moveTo(0, y + scope.offset);
-					scope.canvasGridContext.lineTo(scope.viewParams.CellSize * yCount, y + scope.offset);
+					scope.canvasGridContext.lineTo(scope.viewParams.CellSize * xCount, y + scope.offset);
 				}
 				
 				for(x=0; x <= scope.viewParams.CellSize * xCount; x+=scope.viewParams.CellSize){
 					scope.canvasGridContext.moveTo(x + scope.offset, 0);
-					scope.canvasGridContext.lineTo(x + scope.offset, scope.viewParams.CellSize * xCount);
+					scope.canvasGridContext.lineTo(x + scope.offset, scope.viewParams.CellSize * yCount);
 				}
 				
 				scope.canvasGridContext.lineWidth = 1;
@@ -164,7 +169,7 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 			}
 			
 			scope.renderImgLayer = function(contextName, offset){
-			
+
 				var context = scope.getCanvasContext(contextName);
 				
 				if(!context)
@@ -179,24 +184,25 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				
 				for(var i = 0; i < layer.length; i++){
 				 
-				    if(layer[i].XFrom + layer[i].Width < scope.viewParams.StartWithX)
+				    if(layer[i].XFrom + layer[i].Width <= scope.viewParams.StartWithX)
 						continue;
 					
-					if(layer[i].XFrom > scope.viewParams.StartWithX + scope.viewParams.XCount)
+					if(layer[i].XFrom >= scope.viewParams.StartWithX + scope.viewParams.XCount)
 						continue;
 					
-					if(layer[i].YFrom + layer[i].Height < scope.viewParams.StartWithY)
+					if(layer[i].YFrom + layer[i].Height <= scope.viewParams.StartWithY)
 						continue;
 					
-					if(layer[i].YFrom > scope.viewParams.StartWithY + scope.viewParams.YCount)
+					if(layer[i].YFrom >= scope.viewParams.StartWithY + scope.viewParams.YCount)
 						continue;
 						
 					var xFrom = Math.max(layer[i].XFrom, scope.viewParams.StartWithX) - scope.viewParams.StartWithX;
 				    var yFrom = Math.max(layer[i].YFrom, scope.viewParams.StartWithY) - scope.viewParams.StartWithY;
-					var width = Math.min(layer[i].Width, scope.viewParams.XCount - xFrom);
-					var height = Math.min(layer[i].Height, scope.viewParams.YCount - yFrom);
+					scope.viewParams.XCount - (scope.viewParams.StartWithX -  layer[i].XFrom)
+					var height = Math.min(layer[i].Height, scope.viewParams.StartWithY + scope.viewParams.YCount - layer[i].YFrom);
+					var width = Math.min(layer[i].Width, scope.viewParams.StartWithX + scope.viewParams.XCount - layer[i].XFrom);
 					
-										
+												
 					scope.addImage(xFrom, 
 					yFrom, 
 					width, 
@@ -218,11 +224,18 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				scope.canvasSelection.width  = scope.canvasSelection.width;
 				
 				if(scope.SelectedCell){
-					scope.canvasSelectionContext.beginPath();
-					scope.canvasSelectionContext.lineWidth="2";
-					scope.canvasSelectionContext.strokeStyle="red";
-					scope.canvasSelectionContext.rect(scope.SelectedCell.X * scope.viewParams.CellSize, scope.SelectedCell.Y * scope.viewParams.CellSize,scope.viewParams.CellSize,scope.viewParams.CellSize); 
-					scope.canvasSelectionContext.stroke();
+					if(scope.SelectedCell.X -scope.viewParams.StartWithX >= 0 
+					&& scope.SelectedCell.Y -scope.viewParams.StartWithY >= 0
+					&& scope.SelectedCell.X < scope.viewParams.StartWithX  + scope.viewParams.XCount
+					&& scope.SelectedCell.Y < scope.viewParams.StartWithY  + scope.viewParams.YCount
+					){
+							
+						scope.canvasSelectionContext.beginPath();
+						scope.canvasSelectionContext.lineWidth="2";
+						scope.canvasSelectionContext.strokeStyle="red";
+						scope.canvasSelectionContext.rect((scope.SelectedCell.X-scope.viewParams.StartWithX)* scope.viewParams.CellSize, (scope.SelectedCell.Y-scope.viewParams.StartWithY)* scope.viewParams.CellSize,scope.viewParams.CellSize,scope.viewParams.CellSize); 
+						scope.canvasSelectionContext.stroke();
+					}
 				}
 				if(scope.addItem && elem){					
 					var x = (Math.max(event.offsetX, 0)/scope.viewParams.CellSize|0);
@@ -271,20 +284,24 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 					if((x/scope.viewParams.CellSize|0) > scope.viewParams.XCount || (y/scope.viewParams.CellSize|0) > scope.viewParams.YCount)
 						return;
 					
-					scope.SelectedCell = {X : x/scope.viewParams.CellSize|0, Y:y/scope.viewParams.CellSize|0};
+					scope.SelectedCell = {X : (x/scope.viewParams.CellSize|0) + scope.viewParams.StartWithX, Y:(y/scope.viewParams.CellSize|0) + scope.viewParams.StartWithY};
 					scope.renderSelection();
 				}		
 				
 			};
 
 			scope.render = function(){
-			
+			    scope.clearCanvas('Grid');
 				scope.renderGrid();
+				
+				scope.clearCanvas('Background');
 				scope.renderBackground();
+				
 				for(var i = 0; i < scope.cells.Layers.length; i++){
 					scope.clearCanvas(scope.cells.Layers[i]);
 					scope.renderImgLayer(scope.cells.Layers[i], i + 2);
 				}
+				scope.renderSelection();
 			}
 			
 			scope.init ();
