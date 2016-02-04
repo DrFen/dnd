@@ -6,8 +6,8 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 				CellSize: 30,
 				XCount : 0,
 				YCount: 0,			
-				StartWithX: 500,
-				StartWithY: 500
+				StartWithX: 70,
+				StartWithY: 5
 			};	
 			
 	$scope.addItem = {
@@ -34,8 +34,8 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 			
 	$scope.refill = function () {
         $scope.squareArray = {
-			XCount: 1000,
-			YCount: 1000,
+			XCount: 100,
+			YCount: 100,
 			Layers: ['Person'],
 			BackgroundLayer:[],
 			PersonLayer:[]
