@@ -325,6 +325,10 @@
     <Content Include="scripts\game-dictionary\race.js" />
     <Content Include="scripts\game-dictionary\subrace.js" />
     <Content Include="scripts\user-control\user-control.js" />
+    <Content Include="sprites\exampe_terraine.jpg" />
+    <Content Include="sprites\exampe_terraine2.jpg" />
+    <Content Include="sprites\exampe_terraine3.jpg" />
+    <Content Include="sprites\exampe_terraine4.jpg" />
     <Content Include="templates\attribute-selector\attribute-selector.html" />
     <Content Include="templates\attribute-selector\attribute-selector.js" />
     <Content Include="templates\attribute-selector\attribute-select-grid.html" />
