@@ -7,7 +7,7 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 				XCount : 0,
 				YCount: 0,			
 				StartWithX: 70,
-				StartWithY: 5
+				StartWithY: 70
 			};	
 			
 	$scope.addItem = {
