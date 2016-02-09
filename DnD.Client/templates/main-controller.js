@@ -32,6 +32,12 @@ app.controller('MainCtrl', function($scope, $location) {
              RootId: null,
              Action: 'map-edit/123/456'
          },
+		 {
+             Name: 'test-chat',
+             Id: '6',
+             RootId: null,
+             Action: 'chat'
+         },
         {
             Name: 'Пользователи',
             Id: '1.1',

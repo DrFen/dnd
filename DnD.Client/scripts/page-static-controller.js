@@ -5,6 +5,11 @@
 	[{Id: 'id10',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id11',  Background:'sprites/exampe_terraine2.jpg'},{Id: 'id12',  Background:'sprites/exampe_terraine.jpg'}],
 	[{Id: 'id20',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id21',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id22',  Background:'sprites/exampe_terraine2.jpg'}]
 	];*/
+	
+	$scope.userParam = {
+		UserName : 'user 1',
+		UserId : 'us1'
+	};
 
     $scope.deleteAllObjects = function () {
         $scope.$broadcast('deleteObjects', {});

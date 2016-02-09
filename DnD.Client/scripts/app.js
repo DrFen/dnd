@@ -49,7 +49,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       .when("/subrace", { templateUrl: "partials/simple-dictionary.html", controller: "SubraceCtrl" })
       .when("/item-type", { templateUrl: "partials/game-dictionary/item-type-list.html", controller: "ItemTypeCtrl" })
         //campaighn
-      .when("/campaighn", { templateUrl: "partials/simple-dictionary.html", controller: "CampaighnCtrl" })
+      .when("/chat", { templateUrl: "partials/about.html", controller: "PageStaticCtrl" })
 	  .when("/map-edit/:CampaighnId/:Id/", { templateUrl: "partials/map/map-edit.html", controller: "MapEditCtrl" })
     ;
 }]);

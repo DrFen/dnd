@@ -1,0 +1,75 @@
+/*#chat-border{
+	height:100%;
+	width:100%;
+}
+
+#chat-border > .ng-isolate-scope {
+	height:100%;
+	width:100%;
+}
+*/
+#chat-border  .ng-isolate-scope  .tab-content{
+	height:100px;
+	width:100%;
+}
+.chat-view{
+	background-color: azure;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.chat-row{
+	white-space:nowrap;
+	border-bottom-color: gray;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+}
+
+.chat-message-element{
+	display:inline-block;	
+}
+
+.chat-username{
+	width: 20%;
+	max-width: 50px;
+}
+
+.chat-input-element{
+	vertical-align:top;
+	height: 20px;
+	width: 80%;
+	
+}
+
+#chat-input-text{
+	width: -webkit-calc(100% - 75px);
+	width: -moz-calc(100% - 75px);
+	width: calc(100% - 75px);
+}
+#chat-sent-button{
+	width: 70px;
+	padding: 0px;
+        font-size: 80%;	
+}
+
+#chat-context-menu{
+	position:absolute;
+	width:130px;
+	z-index: 1;
+	background-color:azure;
+	border-width: 2px;
+	border-color: gray;
+	border-style: outset;
+}
+.chat-menu-button{	
+	width: 100%;
+	font-size: 10px;
+	padding: 0px;
+	margin: 0px;
+	
+}
+
+.chat-my-message{
+	font-weight: 700;
+	font-style: italic;
+}

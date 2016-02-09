@@ -1,0 +1,30 @@
+﻿<div id="chat-border">
+	<div>
+		<uib-tabset>
+			<uib-tab ng-repeat="chat in userChats" heading="{{chat.Title}}"  select="changeChat(chat.ChatId)">
+				<div class="chat-view" id="{{chat.ChatId}}">					
+					<div class="chat-row" ng-repeat="message in chat.Messages">
+						<div class="chat-message-element" style="color:{{message.UserColor}}" ng-right-click="userMenu(message.UserId, message.UserName)"><strong> {{message.UserName}} : </strong></div>
+						<div class="chat-message-element" ng-class="{'chat-my-message': isMessageForMe(message.MessageText)}">{{message.MessageText}}</div>
+					</div>			
+				</div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+	<div>
+		<input class="chat-input-element" id="chat-input-text" type="text" ng-model="messageText" ng-keypress="onKeyPress($event)"/>
+		<input class="chat-input-element" id="chat-sent-button" type="button" value="Отправить" ng-click="sendMessage()"/>
+	</div>
+</div>
+
+<div id="chat-context-menu" ng-if="showMenu" style="left:{{xMenuPosition}}px; top:{{yMenuPosition}}px">
+	<div>
+		<input type="button" value="Создать приватный чат" ng-click="createPrivateChannel()" class="chat-menu-button"/>
+	</div>	
+	<div>
+		<input type="button" value="Обратиться" ng-click="refer()" class="chat-menu-button"/>
+	</div>
+	<div>
+		<input type="button" value="Удалить из чата" ng-click="deleteUser()" class="chat-menu-button"/>
+	</div>	
+</div>

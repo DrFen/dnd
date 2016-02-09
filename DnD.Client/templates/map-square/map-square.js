@@ -6,7 +6,11 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				cells: "=cells",
 				addItem: "=addItem"
 			},
-        controller: function ($scope) {				
+        controller: function ($scope) {		
+
+			$scope.$on('addMotionAnimation', function(event, animationParam){
+				$scope.playAnimation(animationParam);
+			});
 		
         },
         link: function (scope, element, attrs) {		
@@ -35,6 +39,11 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				scope.canvasGridContext = scope.canvasGrid.getContext("2d");	
 				scope.canvasGrid.height = scope.canvas.offsetHeight;
 				scope.canvasGrid.width = scope.canvas.offsetWidth;
+				
+				scope.canvasAnimation = document.getElementById("map-canvas-animation");
+				scope.canvasAnimationContext = scope.canvasAnimation.getContext("2d");	
+				scope.canvasAnimation.height = scope.canvas.offsetHeight;
+				scope.canvasAnimation.width = scope.canvas.offsetWidth;
 				
 				
 				scope.layerKey = [];
@@ -135,6 +144,8 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 						return scope.canvasSelectionContext;
 					case 'Grid' :	
 						return scope.canvasGridContext;	
+					case 'Animation' :	
+						return scope.canvasAnimationContext;	
 					default:
 						var index = scope.layerKey.indexOf(contextName);
 						if (index!= -1)
@@ -151,7 +162,9 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 					case 'Selection' :	
 						return scope.canvasSelection;
 					case 'Grid' :	
-						return scope.canvasGrid;		
+						return scope.canvasGrid;	
+					case 'Animation' :	
+						return scope.canvasAnimation;	
 					default:
 						var index = scope.layerKey.indexOf(contextName);
 						if (index!= -1)
@@ -199,19 +212,31 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				
 			};
 			
-			scope.addImage = function(x, y, width, height, offset, imagePath, context){
+			scope.addImage = function(x, y, width, height, offset, imagePath, context, rotationAngle){
 				var image = new Image();
 				image.onload = function(){
+					var multiplier = 1;
+					var offsetImg = 0;
+					if(rotationAngle){
+						offsetImg = scope.viewParams.CellSize/2;
+						context.save();
+						context.translate((offset +scope.offset+ x * scope.viewParams.CellSize + offsetImg) , (offset +scope.offset + y * scope.viewParams.CellSize + offsetImg));
+						context.rotate(rotationAngle);
+						multiplier = -0.5;
+					};
 					context.drawImage(image,0,0,image.width,image.height,
-					offset +scope.offset+ x * scope.viewParams.CellSize,
-					offset +scope.offset + y * scope.viewParams.CellSize ,
+					(offset +scope.offset+ x * scope.viewParams.CellSize - offsetImg) * multiplier,
+					(offset +scope.offset + y * scope.viewParams.CellSize - offsetImg) * multiplier ,
 					scope.viewParams.CellSize * width- 2 * offset,
 					scope.viewParams.CellSize * height-2 * offset);
+					if(rotationAngle){
+						 context.restore();
+					};	
 				};
 				image.src = imagePath;
 			}
 			
-			scope.renderImgLayer = function(contextName, offset){
+			scope.renderImgLayer = function(contextName, offset, rotationAngle){
 
 				var context = scope.getCanvasContext(contextName);
 				
@@ -251,7 +276,8 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 					height, 
 					offset, 
 					layer[i].Image,
-					context);
+					context,
+					rotationAngle);
 				}
 			}
 			
@@ -578,6 +604,25 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 					scope.renderImgLayer(scope.cells.Layers[i], i + 2);
 				}
 				scope.renderSelection();
+			}
+			
+			scope.playAnimation = function(animation){
+				if(!animation)
+					return;
+				
+				var timer = setInterval(function(animation){
+						var angle = Math.atan2(animation.YTo*-1 - animation.YFrom*-1, animation.XTo*-1 - animation.XFrom*-1);
+						scope.clearCanvas('Animation');
+						scope.cells.AnimationLayer = [];
+						scope.cells.AnimationLayer.push({ Id: animation.Id, Image: animation.Image, XFrom: animation.XFrom, YFrom:animation.YFrom , Width : 0.5, Height:0.5});
+						//debugger;
+						if(angle<0)		
+							angle = angle * -1;
+						scope.renderImgLayer('Animation', 0, angle);
+						//clearInterval(timer);
+								
+				}, 200, animation);
+				
 			}
 			
 			scope.init ();

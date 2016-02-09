@@ -6,8 +6,8 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 				CellSize: 30,
 				XCount : 0,
 				YCount: 0,			
-				StartWithX: 70,
-				StartWithY: 70
+				StartWithX: 0,
+				StartWithY: 0
 			};	
 			
 	$scope.addItem = {
@@ -38,7 +38,8 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 			YCount: 100,
 			Layers: ['Person'],
 			BackgroundLayer:[],
-			PersonLayer:[]
+			PersonLayer:[],
+			AnimationLayer : []
 		};
         for (var y = 0; y < $scope.squareArray.YCount; y++) {
             var row = [];
@@ -62,6 +63,19 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 	$scope.scroll = function(offsetX, offsetY){
 		$scope.viewParams.StartWithX +=offsetX;
 		$scope.viewParams.StartWithY +=offsetY;
+	}
+	
+	$scope.animationTest = function(){
+		var animation = {
+			Id: 'an1',
+			XFrom : 1,
+			YFrom: 1,
+			XTo : 5,
+			YTo: 5,
+			Image : 'sprites/arrow.png'
+		};
+		
+		$scope.$broadcast('addMotionAnimation', animation);
 	}
 	
     $scope.refill();

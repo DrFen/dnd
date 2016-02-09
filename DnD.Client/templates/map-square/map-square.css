@@ -17,6 +17,9 @@
 #map-canvas-selection{
    z-index:1000;
 }
+#map-canvas-animation{
+   z-index:950;
+}
 
 #map-canvas-grid{
    z-index:900;
