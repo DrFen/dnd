@@ -1,0 +1,19 @@
+<div id="tag-grid-border">
+	<div class="tag-grid-tag" ng-repeat="tag in tagList" title="{{tag.Name}}">
+		<label class="tag-grid-label-text">{{tag.Name}}</label>
+		<label class="tag-grid-delete" ng-click="deleteTag($index)">&#215</label>
+	</div>
+	<div id="tag-grid-plus" title="Добавить тэг" ng-click="addTag()" ng-if="!selectParam.ShowSelect">
+	</div>
+	<div ng-if="selectParam.ShowSelect" id="tag-grid-select">
+		<select ui-select2="{allowClear:true}" ng-model="selectParam.SelectedTag">
+			<option ng-repeat="val in listForAdd" value="{{val.Id}}">{{val.Name}}</option>
+		</select>
+		<!--<select ng-model="selectParam.SelectedTag">
+			<option ng-repeat="newTag in listForAdd" value="{{newTag.Id}}">{{newTag.Name}}</option>
+	   </select>-->
+		<input class="tag-grid-button" type="button" ng-click="selectTag()" value="ok"/>
+		<input class="tag-grid-button" type="button" ng-click="dismissSelectTag()" value="cancel"/>
+	</div>
+</div>
+

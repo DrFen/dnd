@@ -38,6 +38,12 @@ app.controller('MainCtrl', function($scope, $location) {
              RootId: null,
              Action: 'chat'
          },
+		 {
+             Name: 'tag-grid',
+             Id: '7',
+             RootId: null,
+             Action: 'tag'
+         },
         {
             Name: 'Пользователи',
             Id: '1.1',

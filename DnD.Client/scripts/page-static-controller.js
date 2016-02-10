@@ -1,15 +1,44 @@
 ﻿app.controller('PageStaticCtrl', function ($scope, $rootScope, $location) {
 
-    /*$scope.squareArray = [
-	[{Id: 'id00',  Background:'sprites/exampe_terraine2.jpg'},{Id: 'id01',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id02',  Background:'sprites/exampe_terraine.jpg'}],
-	[{Id: 'id10',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id11',  Background:'sprites/exampe_terraine2.jpg'},{Id: 'id12',  Background:'sprites/exampe_terraine.jpg'}],
-	[{Id: 'id20',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id21',  Background:'sprites/exampe_terraine.jpg'},{Id: 'id22',  Background:'sprites/exampe_terraine2.jpg'}]
-	];*/
+	$scope.randomString = function (count){
+			var text = "";
+			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+			for( var i=0; i < count; i++ )
+				text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+			return text;
+	};
+
+	$scope.tagList = [];
+	$scope.fullTagList = [];
+	for(var i = 0; i <10; i++){
+			var name = $scope.randomString(Math.round(1 + Math.random() * 9));
+			$scope.tagList.push({
+				Id: 't' + i , 
+				Name: name 
+			});
+			$scope.fullTagList.push({
+				Id: 't' + i , 
+				Name: name 
+			});
+	}
+	
+	for(var i=10; i<20; i++){
+		$scope.fullTagList.push({
+				Id: 't' + i , 
+				Name: $scope.randomString(Math.round(1 + Math.random() * 9)) 
+			});
+	}
+	
+
 	
 	$scope.userParam = {
 		UserName : 'user 1',
 		UserId : 'us1'
 	};
+	
+	
 
     $scope.deleteAllObjects = function () {
         $scope.$broadcast('deleteObjects', {});

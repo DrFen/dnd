@@ -68,10 +68,11 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 	$scope.animationTest = function(){
 		var animation = {
 			Id: 'an1',
-			XFrom : 1,
+			XFrom : 2,
 			YFrom: 1,
 			XTo : 5,
 			YTo: 5,
+			Speed: 0.1,
 			Image : 'sprites/arrow.png'
 		};
 		

@@ -51,6 +51,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         //campaighn
       .when("/chat", { templateUrl: "partials/about.html", controller: "PageStaticCtrl" })
 	  .when("/map-edit/:CampaighnId/:Id/", { templateUrl: "partials/map/map-edit.html", controller: "MapEditCtrl" })
+	  .when("/tag", { templateUrl: "partials/test/tag-test.html", controller: "PageStaticCtrl" })
     ;
 }]);
 app.factory('dataService', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {

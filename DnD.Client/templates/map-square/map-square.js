@@ -215,7 +215,7 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 			scope.addImage = function(x, y, width, height, offset, imagePath, context, rotationAngle){
 				var image = new Image();
 				image.onload = function(){
-					var multiplier = 1;
+					/*var multiplier = 1;
 					var offsetImg = 0;
 					if(rotationAngle){
 						offsetImg = scope.viewParams.CellSize/2;
@@ -223,10 +223,10 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 						context.translate((offset +scope.offset+ x * scope.viewParams.CellSize + offsetImg) , (offset +scope.offset + y * scope.viewParams.CellSize + offsetImg));
 						context.rotate(rotationAngle);
 						multiplier = -0.5;
-					};
+					};*/
 					context.drawImage(image,0,0,image.width,image.height,
-					(offset +scope.offset+ x * scope.viewParams.CellSize - offsetImg) * multiplier,
-					(offset +scope.offset + y * scope.viewParams.CellSize - offsetImg) * multiplier ,
+					(offset +scope.offset+ x * scope.viewParams.CellSize ) ,
+					(offset +scope.offset + y * scope.viewParams.CellSize )  ,
 					scope.viewParams.CellSize * width- 2 * offset,
 					scope.viewParams.CellSize * height-2 * offset);
 					if(rotationAngle){
@@ -614,12 +614,22 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 						var angle = Math.atan2(animation.YTo*-1 - animation.YFrom*-1, animation.XTo*-1 - animation.XFrom*-1);
 						scope.clearCanvas('Animation');
 						scope.cells.AnimationLayer = [];
-						scope.cells.AnimationLayer.push({ Id: animation.Id, Image: animation.Image, XFrom: animation.XFrom, YFrom:animation.YFrom , Width : 0.5, Height:0.5});
-						//debugger;
+						scope.cells.AnimationLayer.push({ 
+															Id: animation.Id, 
+															Image: animation.Image, 
+															XFrom: animation.XFrom, 
+															YFrom: animation.YFrom , 
+															Width : 0.5, 
+															Height:0.5
+														}
+						);
+						
 						if(angle<0)		
 							angle = angle * -1;
+						//debugger;
+						//animation.XFrom = animation.Speed * Math.sin(Math.PI - angle)+ animation.XFrom;
+							
 						scope.renderImgLayer('Animation', 0, angle);
-						//clearInterval(timer);
 								
 				}, 200, animation);
 				
