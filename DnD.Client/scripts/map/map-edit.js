@@ -2,13 +2,82 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 	$scope.Id = $routeParams.Id;
 	$scope.CampaighnId = $routeParams.CampaighnId;
 	
-	$scope.viewParams = {
+	$scope.init = function(){
+		$scope.viewParams = {
 				CellSize: 30,
 				XCount : 0,
 				YCount: 0,			
 				StartWithX: 0,
 				StartWithY: 0
-			};	
+			};
+			
+		$scope.allLayers = ['Furniture', 'Person'];	
+			
+		if(!$scope.Id){
+			$scope.squareArray = {
+				XCount: 1,
+				YCount: 1,
+				Layers: ['Person'],
+				BackgroundLayer:[],
+				FurnitureLayer:[],
+				PersonLayer:[],
+				AnimationLayer : []
+			};
+		};
+		
+		$scope.ChangeSizeParam = {
+			ChangeCount:1,
+			ChangeXAxis: true,
+			ChangeYAxis: true,
+			Way : 'd'
+		}
+	};
+	
+	$scope.changeSize = function(){
+	
+		if(!$scope.ChangeSizeParam)
+			return;
+			
+		if(!$scope.ChangeSizeParam.Way || !$scope.ChangeSizeParam.ChangeCount)
+			return;
+			
+		if(!($scope.ChangeSizeParam.Way ==='u' || $scope.ChangeSizeParam.Way ==='d'))
+			return;
+			
+		if($scope.ChangeSizeParam.ChangeCount > 0){
+			$scope.squareArray.XCount = $scope.squareArray.XCount + $scope.ChangeSizeParam.ChangeCount;
+			$scope.squareArray.YCount = $scope.squareArray.YCount + $scope.ChangeSizeParam.ChangeCount;
+			if($scope.ChangeSizeParam.Way ==='d'){
+				
+			}else{
+			
+			};
+		} else{
+			$scope.squareArray.XCount = Math.max($scope.squareArray.XCount + $scope.ChangeSizeParam.ChangeCount,0);
+			$scope.squareArray.YCount = Math.max($scope.squareArray.YCount + $scope.ChangeSizeParam.ChangeCount,0);
+			if($scope.ChangeSizeParam.Way ==='d'){
+				
+			}else{
+			
+			};
+		};
+			
+	};
+	
+	$scope.addElement = function(){
+		var newElement = {
+				Width: 2,
+				Height: 2,
+				AuraColor : "rgba(255, 255, 0, 0.5)",
+				Layer: 'Background',
+				Image: 'sprites/item.jpg'
+			};
+		$scope.$broadcast('addElement', newElement)
+	}
+	
+	$scope.init();
+	
+	/*	
 			
 	$scope.addItem = {
 				Width: 2,
@@ -17,20 +86,7 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 				Layer: 'Person',
 				Image: 'sprites/item.jpg'
 			};
-			
-	/*$scope.newRefill = function(){
-		$scope.squareArray = {
-			XCount: 30,
-			YCount: 30,
-			Layers: ['Person'],
-			BackgroundLayer:[
-				{Id: 1,XFrom: 0, YFrom :0 , Width: 15, Height : 15, Image: 'sprites/exampe_terraine.jpg'},
-				{Id: 2,XFrom: 15, YFrom :0 ,Width: 15, Height : 15, Image: 'sprites/exampe_terraine2.jpg'},
-				{Id: 3,XFrom: 0, YFrom :15 , Width: 15, Height : 15, Image: 'sprites/exampe_terraine3.jpg'},
-				{Id: 4,XFrom: 15, YFrom :15 , Width: 15, Height : 15, Image: 'sprites/exampe_terraine4.jpg'}
-				]		
-		};
-	}	*/
+	
 			
 	$scope.refill = function () {
         $scope.squareArray = {
@@ -79,6 +135,6 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 		$scope.$broadcast('addMotionAnimation', animation);
 	}
 	
-    $scope.refill();
-	//$scope.newRefill();
+    $scope.refill();*/
+
 });

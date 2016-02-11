@@ -30,7 +30,7 @@ app.controller('MainCtrl', function($scope, $location) {
              Name: 'test-create-map',
              Id: '5',
              RootId: null,
-             Action: 'map-edit/123/456'
+             Action: 'map-edit/123/'
          },
 		 {
              Name: 'test-chat',

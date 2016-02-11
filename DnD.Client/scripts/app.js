@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngSanitize'/*, 'ui.tree', 'ui.select2', 'ui.slider'*/]);
+var app = angular.module('dndapp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.tree', 'ui.select2']);
 
 app.setCookie = function (name, value, options) {
     options = options || {};
@@ -51,6 +51,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         //campaighn
       .when("/chat", { templateUrl: "partials/about.html", controller: "PageStaticCtrl" })
 	  .when("/map-edit/:CampaighnId/:Id/", { templateUrl: "partials/map/map-edit.html", controller: "MapEditCtrl" })
+	  .when("/map-edit/:CampaighnId", { templateUrl: "partials/map/map-edit.html", controller: "MapEditCtrl" })
 	  .when("/tag", { templateUrl: "partials/test/tag-test.html", controller: "PageStaticCtrl" })
     ;
 }]);

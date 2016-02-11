@@ -1,10 +1,63 @@
 <!--<link href="map-edit.css" rel="stylesheet"/>-->
 <div class="content-container">	
 		<div id = "map-view">
-			<map-square cells="squareArray" add-item="addItem" view-params="viewParams"></map-square>
+			<map-square cells="squareArray" view-params="viewParams"></map-square>
 			<!--<div style="background-color: bisque; width:100%; height:100%;"></div>-->
 		</div>
 		<div id="map-controls">
+			<div class="map-change-element">
+				<div>
+					<input type="checkbox" class="layer-checkbox" id="Background" name ="Background" checked="true"/>
+					<label for="Background" class="layer-checkbox-label" ></label>
+					<label>Фон</label>
+				</div>
+				<div ng-repeat="layer in allLayers">					
+					<input type="checkbox" class="layer-checkbox" id={{layer}} name ={{layer}} ng-model="squareArray.Layers.indexOf(layer)!=-1"/>
+					<label for="{{layer}}" class="layer-checkbox-label" ></label>
+					<label>{{layer}}</label>
+				</div>
+			</div>
+			<uib-accordion close-others="oneAtATime">
+				<uib-accordion-group>
+					<uib-accordion-heading style="font-size: 5px;">
+						Работа с картой <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</uib-accordion-heading>
+					<div class="map-change-element">
+						<div>Изменение размеров</div>
+						<div>
+							Количество клеток: 
+							<input type="number" ng-model="ChangeSizeParam.ChangeCount" class="map-change-input"/>
+						</div>
+						<div>
+							<label><input type="checkbox" ng-model="ChangeSizeParam.ChangeXAxis"/>По оси X</label>
+							<label><input type="checkbox" ng-model="ChangeSizeParam.ChangeYAxis"/>По оси Y</label>
+						</div>
+						<div>
+							<label>
+								<input type="radio" ng-model="ChangeSizeParam.Way" value="u">
+								Сверху / Слева
+							</label><br/>
+							<label>
+								<input type="radio" ng-model="ChangeSizeParam.Way" value="d">
+								Снизу / Справа
+							</label><br/>
+						</div>
+						<div>
+							<input type="button" value="Применить" ng-click="changeSize()"/>
+						</div>
+					</div>	
+				</uib-accordion-group>	
+				<uib-accordion-group>
+					<uib-accordion-heading style="font-size: 5px;">
+						Добавление элементов <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</uib-accordion-heading>
+					<div class="map-change-element">
+						<div>
+							<input type="button" value="test" ng-click="addElement()"/>
+						</div>
+					</div>	
+				</uib-accordion-group>
+			</uib-accordion>
 		</div>
 		<div id="map-actions">
 			<button style="height: 100%; width: 10%;" ng-click="moveRight()">Двинуть</button>

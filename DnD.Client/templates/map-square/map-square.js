@@ -3,15 +3,18 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 			templateUrl: '/templates/map-square/map-square.html',
 			scope: {
 				viewParams: "=viewParams",
-				cells: "=cells",
-				addItem: "=addItem"
+				cells: "=cells"
 			},
         controller: function ($scope) {		
 
 			$scope.$on('addMotionAnimation', function(event, animationParam){
 				$scope.playAnimation(animationParam);
 			});
-		
+			
+			$scope.$on('addElement', function(event, addingElement){
+				$scope.addItem = addingElement;
+			});
+
         },
         link: function (scope, element, attrs) {		
 			
@@ -121,19 +124,8 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 						}, delay, x, y);
 						
 					}
-				};
-				
-				scope.$watch('viewParams', function(){
-					scope.viewParams.StartWithX  = Math.max(scope.viewParams.StartWithX, 0);
-					scope.viewParams.StartWithY  = Math.max(scope.viewParams.StartWithY, 0);
-					
-					scope.viewParams.XCount = Math.min(((scope.canvas.width - scope.scrollSize )/ scope.viewParams.CellSize | 0), scope.cells.XCount);
-					scope.viewParams.YCount = Math.min(((scope.canvas.height- scope.scrollSize ) / scope.viewParams.CellSize | 0), scope.cells.YCount);
-					console.log('init complete. XCount = ' + scope.viewParams.XCount + '; YCount = ' + scope.viewParams.YCount + ';');
-					scope.render();				
-				}, true);				
+				};			
 
-				
 			};
 			
 			scope.getCanvasContext = function(contextName){
@@ -641,8 +633,27 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				console.log('resize');
 				scope.init ();
 				scope.render();
-
 			};
+			
+			scope.$watch('viewParams', function(){
+					scope.viewParams.StartWithX  = Math.max(scope.viewParams.StartWithX, 0);
+					scope.viewParams.StartWithY  = Math.max(scope.viewParams.StartWithY, 0);
+					
+					scope.viewParams.XCount = Math.min(((scope.canvas.width - scope.scrollSize )/ scope.viewParams.CellSize | 0), scope.cells.XCount);
+					scope.viewParams.YCount = Math.min(((scope.canvas.height- scope.scrollSize ) / scope.viewParams.CellSize | 0), scope.cells.YCount);
+					console.log('init complete. XCount = ' + scope.viewParams.XCount + '; YCount = ' + scope.viewParams.YCount + ';');
+					scope.render();				
+				}, true);	
+				
+			scope.$watch('cells', function(){
+				scope.viewParams.StartWithX  = Math.max(scope.viewParams.StartWithX, 0);
+				scope.viewParams.StartWithY  = Math.max(scope.viewParams.StartWithY, 0);
+				
+				scope.viewParams.XCount = Math.min(((scope.canvas.width - scope.scrollSize )/ scope.viewParams.CellSize | 0), scope.cells.XCount);
+				scope.viewParams.YCount = Math.min(((scope.canvas.height- scope.scrollSize ) / scope.viewParams.CellSize | 0), scope.cells.YCount);
+				scope.render();				
+				
+			}, true);
         }
     }
 });
