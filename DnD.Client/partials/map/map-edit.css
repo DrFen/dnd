@@ -1,7 +1,7 @@
-#map-view{
+﻿#map-view{
 	display : inline-block;
 	float: left;
-	width: 80%;
+	width: 75%;
 	height: 100%;
 	background-color: azure;
 }
@@ -9,18 +9,19 @@
 #map-controls{
 	display : inline-block;
 	float: right;
-	width: 20%;
+	width: 25%;
 	height: 100%;
 	background-color: rgb(240,240,240);
 	overflow:auto;
 }
 
 #map-controls  span{
-	font-size: 75%;
+	font-size: 10px;
 }
 
 #map-controls  .pull-right{	
 	top: 5px;
+	font-size: 10px;
 }
 
 #map-actions{
@@ -55,6 +56,10 @@
 	width: 60px;
 }
 
+.row-layer label{
+	vertical-align: top;
+}	
+
 /*layer checkbox*/
 .layer-checkbox {
 	display:none;
@@ -72,6 +77,32 @@ input[type=checkbox]:not(checked) + label{
 }
 input[type=checkbox]:checked + label{
 	background-image : url(../../pictures/eye.png);
+	height: 16px;
+	width: 16px;
+	display:inline-block;
+	padding: 0px;
+	margin:0px;
+	background-size: contain;
+}
+
+input[type=radio]:not(checked) + label{
+	border-width:1px;
+	border-style: solid;
+	border-color:black;
+	height: 16px;
+	width: 16px;
+	display:inline-block;
+	padding: 0px;
+	margin:0px;
+}
+.disabled-radio{
+	border-color:gray!important;
+}
+
+
+
+input[type=radio]:checked + label{
+	background-image : url(../../pictures/paintbrush.png);
 	height: 16px;
 	width: 16px;
 	display:inline-block;

@@ -1,4 +1,4 @@
-<!--<link href="map-edit.css" rel="stylesheet"/>-->
+п»ї<!--<link href="map-edit.css" rel="stylesheet"/>-->
 <div class="content-container">	
 		<div id = "map-view">
 			<map-square cells="squareArray" view-params="viewParams"></map-square>
@@ -6,65 +6,69 @@
 		</div>
 		<div id="map-controls">
 			<div class="map-change-element">
-				<div>
-					<input type="checkbox" class="layer-checkbox" id="Background" name ="Background" checked="true"/>
-					<label for="Background" class="layer-checkbox-label" ></label>
-					<label>Фон</label>
+				<div ng-repeat="layer in envVariable.Layers" class="row-layer">	
+					<input type="radio" class="layer-checkbox" name="active-layer" ng-model="envVariable.ActiveLayer" value="{{layer.Id}}" ng-disabled="!layer.Show" id="{{layer.Id + '_radio'}}" name ="{{layer.Id  + '_radio'}}" />
+					<label for="{{layer.Id + '_radio'}}" ng-class="{'disabled-radio': !layer.Show}"></label>
+					<input type="checkbox" class="layer-checkbox" id="{{layer.Id}}" name ="{{layer.Id}}" ng-model="layer.Show"/>
+					<label for="{{layer.Id}}"  ng-click="onChangeVisibility(layer.Show, layer.Id)"></label>
+					<label>{{layer.Name}}</label>
 				</div>
-				<div ng-repeat="layer in allLayers">					
-					<input type="checkbox" class="layer-checkbox" id={{layer}} name ={{layer}} ng-model="squareArray.Layers.indexOf(layer)!=-1"/>
-					<label for="{{layer}}" class="layer-checkbox-label" ></label>
-					<label>{{layer}}</label>
-				</div>
+				<input type="button" value="Р”РѕР±Р°РІРёС‚СЊ СЃР»РѕР№" ng-click="addLayer()"/>
 			</div>
 			<uib-accordion close-others="oneAtATime">
 				<uib-accordion-group>
 					<uib-accordion-heading style="font-size: 5px;">
-						Работа с картой <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+						Р Р°Р±РѕС‚Р° СЃ РєР°СЂС‚РѕР№ <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 					</uib-accordion-heading>
 					<div class="map-change-element">
-						<div>Изменение размеров</div>
+						<div>РР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂРѕРІ</div>
 						<div>
-							Количество клеток: 
+							РљРѕР»РёС‡РµСЃС‚РІРѕ РєР»РµС‚РѕРє: 
 							<input type="number" ng-model="ChangeSizeParam.ChangeCount" class="map-change-input"/>
 						</div>
 						<div>
-							<label><input type="checkbox" ng-model="ChangeSizeParam.ChangeXAxis"/>По оси X</label>
-							<label><input type="checkbox" ng-model="ChangeSizeParam.ChangeYAxis"/>По оси Y</label>
+							<label><input type="checkbox" ng-model="ChangeSizeParam.ChangeXAxis"/>РџРѕ РѕСЃРё X</label>
+							<label><input type="checkbox" ng-model="ChangeSizeParam.ChangeYAxis"/>РџРѕ РѕСЃРё Y</label>
 						</div>
 						<div>
 							<label>
 								<input type="radio" ng-model="ChangeSizeParam.Way" value="u">
-								Сверху / Слева
+								РЎРІРµСЂС…Сѓ / РЎР»РµРІР°
 							</label><br/>
 							<label>
 								<input type="radio" ng-model="ChangeSizeParam.Way" value="d">
-								Снизу / Справа
+								РЎРЅРёР·Сѓ / РЎРїСЂР°РІР°
 							</label><br/>
 						</div>
 						<div>
-							<input type="button" value="Применить" ng-click="changeSize()"/>
+							<input type="button" value="РџСЂРёРјРµРЅРёС‚СЊ" ng-click="changeSize()"/>
 						</div>
 					</div>	
 				</uib-accordion-group>	
 				<uib-accordion-group>
 					<uib-accordion-heading style="font-size: 5px;">
-						Добавление элементов <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+						Р”РѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 					</uib-accordion-heading>
 					<div class="map-change-element">
 						<div>
-							<input type="button" value="test" ng-click="addElement()"/>
+							<select ui-select2="presetSelectConfig" ng-model="envVariable.ActiveNewItemId" style="width:100%">
+								<option ng-repeat="preset in presetList" value="{{preset.Id}}">
+									{{preset.Name}}
+								</option>
+							</select>
+
+							<!--<input type="button" value="test" ng-click="addElement()"/>-->
 						</div>
 					</div>	
 				</uib-accordion-group>
 			</uib-accordion>
 		</div>
 		<div id="map-actions">
-			<button style="height: 100%; width: 10%;" ng-click="moveRight()">Двинуть</button>
-			<button style="height: 100%; width: 10%;" ng-click="scroll(1,0)">Скрольнуть + </button>
-			<button style="height: 100%; width: 10%;" ng-click="scroll(-1,0)" on-change="test">Скрольнуть - </button>
-			<button style="height: 100%; width: 10%;" ng-click="scroll(0,-1)">Вверх </button>
-			<button style="height: 100%; width: 10%;" ng-click="scroll(0,1)">Вниз </button>
+			<button style="height: 100%; width: 10%;" ng-click="moveRight()">Р”РІРёРЅСѓС‚СЊ</button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(1,0)">РЎРєСЂРѕР»СЊРЅСѓС‚СЊ + </button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(-1,0)" on-change="test">РЎРєСЂРѕР»СЊРЅСѓС‚СЊ - </button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(0,-1)">Р’РІРµСЂС… </button>
+			<button style="height: 100%; width: 10%;" ng-click="scroll(0,1)">Р’РЅРёР· </button>
 			<button style="height: 100%; width: 10%;" ng-click="animationTest()">test animation </button>
 		</div>		
 </div>

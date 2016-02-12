@@ -1,36 +1,81 @@
-app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routeParams, $uibModal, dataService) {
+﻿app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routeParams, $uibModal, dataService) {
 	$scope.Id = $routeParams.Id;
 	$scope.CampaighnId = $routeParams.CampaighnId;
 	
+	
+	
+	
 	$scope.init = function(){
 		$scope.viewParams = {
-				CellSize: 30,
-				XCount : 0,
-				YCount: 0,			
-				StartWithX: 0,
-				StartWithY: 0
-			};
+								CellSize: 30,
+								XCount : 0,
+								YCount: 0,			
+								StartWithX: 0,
+								StartWithY: 0
+							};
 			
-		$scope.allLayers = ['Furniture', 'Person'];	
+		$scope.presetSelectConfig ={
+				formatResult: $scope.formatPreset,
+				formatSelection: $scope.formatPreset,
+				allowClear:true
+		}		
+
+		$scope.envVariable = {
+			ActiveLayer : 'Background',
+			ActiveNewItemId: undefined,
+			Layers : [
+				{Id : 'Background', Name : 'Поверхность', Show: true},
+				{Id : 'Furniture', Name : 'Предметы и обстановка', Show: true},
+				{Id : 'Person', Name : 'Персонажи', Show: true}
+			],
+			layerExists : function(layerId){
+				for(var i = 0; i < this.Layers.length; i++){
+					if(this.Layers[i].Id === layerId)
+						return true;
+				}
+				return false;
+			},
+			getActiveIndex : function(){
+				for(var i = 0; i < this.Layers.length; i++){
+					if(this.Layers[i].Id === this.ActiveLayer)
+						return i;
+				}
+			}
+			
+		}
+		
+		
+		$scope.presetList = [
+			{Id: 'p1', PreviewImg: 'sprites/item.jpg', Image: 'sprites/item.jpg', Name: 'preset 1', Width: 1, Height: 1, Parameters:[]},
+			{Id: 'p2', PreviewImg: 'sprites/exampe_terraine.jpg', Image: 'sprites/exampe_terraine.jpg'  , Name: 'preset 1', Width: 1, Height: 1, Parameters:[]},
+			{Id: 'p3', PreviewImg: 'sprites/exampe_terraine2.jpg', Image: 'sprites/exampe_terraine2.jpg', Name: 'preset 2:1', Width: 2, Height: 1, Parameters:[]},
+			{Id: 'p4', PreviewImg: 'sprites/exampe_terraine3.jpg', Image: 'sprites/exampe_terraine3.jpg', Name: 'preset 1:2', Width: 1, Height: 2, Parameters:[]},
+			{Id: 'p5', PreviewImg: 'sprites/exampe_terraine4.jpg', Image: 'sprites/exampe_terraine4.jpg', Name: 'preset 2:2', Width: 2, Height: 2, Parameters:[]}
+		];
+
 			
 		if(!$scope.Id){
 			$scope.squareArray = {
-				XCount: 1,
-				YCount: 1,
-				Layers: ['Person'],
+				XCount: 10,
+				YCount: 10,
+				Layers: [],
 				BackgroundLayer:[],
 				FurnitureLayer:[],
 				PersonLayer:[],
 				AnimationLayer : []
 			};
+
 		};
+			
+		
 		
 		$scope.ChangeSizeParam = {
 			ChangeCount:1,
 			ChangeXAxis: true,
 			ChangeYAxis: true,
 			Way : 'd'
-		}
+		}		
+		
 	};
 	
 	$scope.changeSize = function(){
@@ -64,77 +109,65 @@ app.controller('MapEditCtrl', function ($scope, $rootScope, $location, $routePar
 			
 	};
 	
+	
+	$scope.formatPreset = function(data){
+		for(var i=0; i<$scope.presetList.length; i++){
+			if($scope.presetList[i].Id === data.id)
+				return '<img style="width:20px; height:20px;" src="' + '../../'+$scope.presetList[i].PreviewImg+ '"/>&nbsp;&nbsp;' + data.text;
+				
+		}
+		
+	}
+	
 	$scope.addElement = function(){
 		var newElement = {
 				Width: 2,
 				Height: 2,
 				AuraColor : "rgba(255, 255, 0, 0.5)",
-				Layer: 'Background',
+				Layer: $scope.envVariable.ActiveLayer,
 				Image: 'sprites/item.jpg'
 			};
 		$scope.$broadcast('addElement', newElement)
 	}
 	
-	$scope.init();
-	
-	/*	
-			
-	$scope.addItem = {
-				Width: 2,
-				Height: 2,
-				AuraColor : "rgba(255, 255, 0, 0.5)",
-				Layer: 'Person',
-				Image: 'sprites/item.jpg'
-			};
-	
-			
-	$scope.refill = function () {
-        $scope.squareArray = {
-			XCount: 100,
-			YCount: 100,
-			Layers: ['Person'],
-			BackgroundLayer:[],
-			PersonLayer:[],
-			AnimationLayer : []
-		};
-        for (var y = 0; y < $scope.squareArray.YCount; y++) {
-            var row = [];
-            for (var x = 0; x < $scope.squareArray.XCount; x++) {
-                if (Math.floor(Math.random() * 10) % 2 == 0) {
-                    $scope.squareArray.BackgroundLayer.push({ Id: y * 100000 + x, Image: 'sprites/exampe_terraine3.jpg', XFrom: x, YFrom:y, Width :1, Height:1});
-                }
-                else {
-                    $scope.squareArray.BackgroundLayer.push({ Id: y * 100000 + x, Image: 'sprites/exampe_terraine4.jpg', XFrom: x, YFrom:y, Width :1, Height:1});
-                }
-            }
-        }
-		$scope.squareArray.PersonLayer.push({ Id: y * 99900000 , Image: 'sprites/person.jpg', XFrom: 510, YFrom:505, Width :1, Height:1});
-    };
-	
-	$scope.moveRight = function(){
-		$scope.squareArray.PersonLayer[0].XFrom +=1;
-		$scope.$broadcast('render');
-	}
-
-	$scope.scroll = function(offsetX, offsetY){
-		$scope.viewParams.StartWithX +=offsetX;
-		$scope.viewParams.StartWithY +=offsetY;
-	}
-	
-	$scope.animationTest = function(){
-		var animation = {
-			Id: 'an1',
-			XFrom : 2,
-			YFrom: 1,
-			XTo : 5,
-			YTo: 5,
-			Speed: 0.1,
-			Image : 'sprites/arrow.png'
-		};
+	$scope.addLayer = function(){
+		var layerName = prompt("Введите имя слоя");		
+		if(!layerName)
+			return;
+		layerName = layerName.trim();	
+		var layerId = layerName.replace(new RegExp('[^a-zA-Z0-9а-яА-Я]', 'g'), '').toLowerCase();
 		
-		$scope.$broadcast('addMotionAnimation', animation);
+		if(!layerId){
+			$rootScope.$broadcast('ErrorMessage', 'Имя слоя должно включать цифры и буквы');
+			return;
+		}
+		
+		if($scope.envVariable.layerExists(layerId)){
+			$rootScope.$broadcast('ErrorMessage', 'Существует слой с таким именем');
+			return;
+		}
+		
+		$scope.squareArray[layerId + 'Layer'] = [];
+		$scope.envVariable.Layers.splice($scope.envVariable.getActiveIndex() + 1, 0, {Id : layerId, Name : layerName, Show: true});
+
+
 	}
 	
-    $scope.refill();*/
+	$scope.$watch('envVariable.Layers', function(){
+			if(!$scope.envVariable.Layers[0].Show)
+				$scope.envVariable.Layers[0].Show = true;
+			$scope.squareArray.Layers = [];
+			for(var i=0; i<$scope.envVariable.Layers.length; i++){
+				if($scope.envVariable.Layers[i].Show && $scope.envVariable.Layers[i].Id !== 'Background')	
+					$scope.squareArray.Layers.push($scope.envVariable.Layers[i].Id);
+			};
+		}, true);
+		
+	$scope.onChangeVisibility = function(oldValue, layerId){
+		if(oldValue && $scope.envVariable.ActiveLayer === layerId)
+			$scope.envVariable.ActiveLayer = 'Background';
+			
+	};
+	$scope.init();
 
 });

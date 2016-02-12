@@ -14,6 +14,10 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 			$scope.$on('addElement', function(event, addingElement){
 				$scope.addItem = addingElement;
 			});
+			
+			$scope.$on('render', function(event){
+				$scope.render();
+			});
 
         },
         link: function (scope, element, attrs) {		
@@ -48,25 +52,8 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				scope.canvasAnimation.height = scope.canvas.offsetHeight;
 				scope.canvasAnimation.width = scope.canvas.offsetWidth;
 				
-				
-				scope.layerKey = [];
-				scope.layerContext = [];
-				scope.layerElems = [];
-				for(var i =0; i<scope.cells.Layers.length; i++){
+				scope.addLayers();
 
-
-					var cnv = document.createElement('canvas'); 
-					document.getElementById('map-border').appendChild(cnv);
-					cnv.className = 'map-canvas';
-					cnv.setAttribute('id', 'map-canvas-' + scope.cells.Layers[i]);
-					cnv.height = scope.canvas.offsetHeight;
-					cnv.width = scope.canvas.offsetWidth;
-					cnv.style.zIndex = i + 100;
-					
-					scope.layerKey.push(scope.cells.Layers[i]);
-					scope.layerContext.push(cnv.getContext("2d"));
-					scope.layerElems.push(cnv);
-				}
 				
 				
 				scope.canvasSelection.onmousedown  = function(event){						
@@ -127,6 +114,26 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 				};			
 
 			};
+			
+			scope.addLayers = function(){
+				scope.layerKey = [];
+				scope.layerContext = [];
+				scope.layerElems = [];
+				for(var layerIndex =0; layerIndex<scope.cells.Layers.length; layerIndex++){
+					var cnv = document.createElement('canvas'); 
+					document.getElementById('map-border').appendChild(cnv);
+					cnv.className = 'map-canvas';
+					cnv.setAttribute('id', 'map-canvas-' + scope.cells.Layers[layerIndex]);
+					cnv.setAttribute('class', 'map-canvas added-canvas');
+					cnv.height = scope.canvas.offsetHeight;
+					cnv.width = scope.canvas.offsetWidth;
+					cnv.style.zIndex = layerIndex + 100;
+					
+					scope.layerKey.push(scope.cells.Layers[layerIndex]);
+					scope.layerContext.push(cnv.getContext("2d"));
+					scope.layerElems.push(cnv);
+				};
+			}
 			
 			scope.getCanvasContext = function(contextName){
 				switch(contextName){
@@ -645,12 +652,16 @@ app.directive('mapSquare', function (dataService, $rootScope, $timeout) {
 					scope.render();				
 				}, true);	
 				
-			scope.$watch('cells', function(){
+			scope.$watch('cells', function(newValue, oldValue){
 				scope.viewParams.StartWithX  = Math.max(scope.viewParams.StartWithX, 0);
 				scope.viewParams.StartWithY  = Math.max(scope.viewParams.StartWithY, 0);
 				
 				scope.viewParams.XCount = Math.min(((scope.canvas.width - scope.scrollSize )/ scope.viewParams.CellSize | 0), scope.cells.XCount);
 				scope.viewParams.YCount = Math.min(((scope.canvas.height- scope.scrollSize ) / scope.viewParams.CellSize | 0), scope.cells.YCount);
+				
+				$(".added-canvas").remove();
+				scope.addLayers();
+				
 				scope.render();				
 				
 			}, true);
