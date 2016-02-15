@@ -51,7 +51,7 @@
 					</uib-accordion-heading>
 					<div class="map-change-element">
 						<div>
-							<select ui-select2="presetSelectConfig" ng-model="envVariable.ActiveNewItemId" style="width:100%">
+							<select ui-select2="presetSelectConfig" ng-model="envVariable.SelectedMapItem.Id" style="width:100%">
 								<option ng-repeat="preset in presetList" value="{{preset.Id}}">
 									{{preset.Name}}
 								</option>
